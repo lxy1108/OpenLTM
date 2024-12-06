@@ -1,0 +1,126 @@
+{
+    "sourceFile": "scripts/supervised/rolling_forecast/timer_pems.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 27,
+            "patches": [
+                {
+                    "date": 1733196703295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733196846428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,10 @@\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n-  --root_path ../../TS-Library/dataset/electricity/ \\\n-  --data_path electricity.csv \\\n+  --root_path ../../TS-Library/dataset/PEMS/ \\\n+  --data_path PEMS03.npz \\\n   --model_id ECL_l \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1733196863126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n   --data_path PEMS03.npz \\\n-  --model_id ECL_l \\\n+  --model_id PEMS03 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733197013158,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 16 \\\n   --learning_rate 0.00005 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1733202500630,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS03.npz \\\n-  --model_id PEMS03 \\\n+  --data_path PEMS04.npz \\\n+  --model_id PEMS04 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733202592167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS04.npz \\\n-  --model_id PEMS04 \\\n+  --data_path PEMS07.npz \\\n+  --model_id PEMS07 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733202598155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733202640435,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS07.npz \\\n-  --model_id PEMS07 \\\n+  --data_path PEMS08.npz \\\n+  --model_id PEMS08 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733202703579,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS08.npz \\\n-  --model_id PEMS08 \\\n+  --data_path PEMS07.npz \\\n+  --model_id PEMS07 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -21,9 +21,9 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 16 \\\n+  --batch_size 8 \\\n   --learning_rate 0.00005 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1733202715294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733202756235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 4 \\\n   --learning_rate 0.00005 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1733216346117,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -7,12 +7,12 @@\n for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS07.npz \\\n-  --model_id PEMS07 \\\n+  --data_path PEMS03.npz \\\n+  --model_id PEMS03 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -29,6 +29,7 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir forecast_PEMS04_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr5e-05_bt16_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733217132411,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS03.npz \\\n-  --model_id PEMS03 \\\n+  --data_path PEMS07.npz \\\n+  --model_id PEMS07 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733217139556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS07.npz \\\n-  --model_id PEMS07 \\\n+  --data_path PEMS08.npz \\\n+  --model_id PEMS08 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733220327089,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS08.npz \\\n-  --model_id PEMS08 \\\n+  --data_path PEMS04.npz \\\n+  --model_id PEMS04 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -21,15 +21,15 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 16 \\\n   --learning_rate 0.00005 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_PEMS04_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr5e-05_bt16_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0\n+  --test_dir forecast_PEMS03_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr5e-05_bt16_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733234588513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,13 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 720\n+for test_pred_len in 96\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n   --data_path PEMS04.npz \\\n   --model_id PEMS04 \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1733234605058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -29,7 +29,6 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_PEMS03_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr5e-05_bt16_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0\n+  --valid_last\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733234625762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS04.npz \\\n-  --model_id PEMS04 \\\n+  --data_path PEMS03.npz \\\n+  --model_id PEMS03 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733279301192,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len 720 \\\n+  --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n"
+                },
+                {
+                    "date": 1733279339803,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS03.npz \\\n-  --model_id PEMS03 \\\n+  --data_path PEMS04.npz \\\n+  --model_id PEMS04 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733279362324,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733285502662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS04.npz \\\n-  --model_id PEMS04 \\\n+  --data_path PEMS03.npz \\\n+  --model_id PEMS03 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733287472613,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 16 \\\n+  --batch_size 8 \\\n   --learning_rate 0.00005 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1733294521563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS03.npz \\\n-  --model_id PEMS03 \\\n+  --data_path PEMS04.npz \\\n+  --model_id PEMS04 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733305594965,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS04.npz \\\n-  --model_id PEMS04 \\\n+  --data_path PEMS03.npz \\\n+  --model_id PEMS03 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733306449496,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -9,10 +9,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS03.npz \\\n-  --model_id PEMS03 \\\n+  --data_path PEMS04.npz \\\n+  --model_id PEMS04 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733322425011,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733322443221,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,34 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n+  --data_path PEMS03.npz \\\n+  --model_id PEMS03 \\\n+  --model $model_name \\\n+  --data MultivariateDatasetBenchmark  \\\n+  --seq_len $seq_len \\\n+  --input_token_len $token_len \\\n+  --output_token_len 96 \\\n+  --test_seq_len $seq_len \\\n+  --test_pred_len $test_pred_len \\\n+  --e_layers 6 \\\n+  --d_model 512 \\\n+  --d_ff 2048 \\\n+  --batch_size 8 \\\n+  --learning_rate 0.00005 \\\n+  --lradj type1 \\\n+  --train_epochs 10 \\\n+  --gpu 0 \\\n+  --cosine \\\n+  --tmax 10 \\\n+  --use_norm \\\n+  --valid_last\n+\n+python -u run.py \\\n+  --task_name forecast \\\n+  --is_training 1 \\\n+  --root_path ../../TS-Library/dataset/PEMS/ \\\n   --data_path PEMS04.npz \\\n   --model_id PEMS04 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n"
+                }
+            ],
+            "date": 1733196703295,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=3\nmodel_name=timer\ntoken_num=7\ntoken_len=96\nseq_len=$((token_num * token_len))\n# training one model with a context length\nfor test_pred_len in 720\ndo\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ../../TS-Library/dataset/electricity/ \\\n  --data_path electricity.csv \\\n  --model_id ECL_l \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len 720 \\\n  --test_seq_len $seq_len \\\n  --test_pred_len $test_pred_len \\\n  --e_layers 6 \\\n  --d_model 512 \\\n  --d_ff 2048 \\\n  --batch_size 8 \\\n  --learning_rate 0.00005 \\\n  --lradj type1 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last\ndone"
+        }
+    ]
+}

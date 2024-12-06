@@ -1,0 +1,54 @@
+{
+    "sourceFile": "scripts/adaptation/full_shot/timer_solar.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1730727799501,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730727822482,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,14 +16,14 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 6 \\\n-  --d_model 512 \\\n-  --d_ff 1024 \\\n+  --e_layers 8 \\\n+  --d_model 1024 \\\n+  --d_ff 2048 \\\n   --batch_size 32 \\\n-  --learning_rate 0.00001 \\\n-  --lradj type1 \\\n+  --learning_rate 5e-5 \\\n+  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730727852599,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n-  --model_id Solar \\\n+  --model_id Solar_finetune \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -27,5 +27,7 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n\\ No newline at end of file\n+  --valid_last \\\n+  --adaptation \\\n+  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730767774436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,10 @@\n   --test_pred_len 96 \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n-  --learning_rate 5e-5 \\\n+  --batch_size 16 \\\n+  --learning_rate 3e-5 \\\n   --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730767793356,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,8 @@\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 16 \\\n   --learning_rate 3e-5 \\\n-  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730776501397,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,13 +20,14 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 16 \\\n-  --learning_rate 3e-5 \\\n+  --learning_rate 5e-5 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --adaptation \\\n\\ No newline at end of file\n-  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  --test_dir forecast_Solar_finetune_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr5e-05_bt16_wd0_el8_dm1024_dff2048_nh8_cosTrue_test_0\n+  # --adaptation \\\n+  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730776525193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,13 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n+for test_pred_len in 192 336 720\n+do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n   --model_id Solar_finetune \\\n   --model $model_name \\\n@@ -29,5 +31,6 @@\n   --use_norm \\\n   --valid_last \\\n   --test_dir forecast_Solar_finetune_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr5e-05_bt16_wd0_el8_dm1024_dff2048_nh8_cosTrue_test_0\n   # --adaptation \\\n-  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n\\ No newline at end of file\n+  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730776532112,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n+  --test_pred_len $test_pred_len \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 16 \\\n"
+                },
+                {
+                    "date": 1730781350186,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n for test_pred_len in 192 336 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n   --model_id Solar_finetune \\\n   --model $model_name \\\n@@ -29,8 +29,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_Solar_finetune_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr5e-05_bt16_wd0_el8_dm1024_dff2048_nh8_cosTrue_test_0\n   # --adaptation \\\n   # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n-done\n\\ No newline at end of file\n+done\n+\n+  --test_dir forecast_Solar_finetune_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr5e-05_bt16_wd0_el8_dm1024_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1730781367068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -29,9 +29,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  # --adaptation \\\n-  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  --adaptation \\\n+  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n done\n \n-  --test_dir forecast_Solar_finetune_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr5e-05_bt16_wd0_el8_dm1024_dff2048_nh8_cosTrue_test_0\n+  # --test_dir forecast_Solar_finetune_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr5e-05_bt16_wd0_el8_dm1024_dff2048_nh8_cosTrue_test_0\n"
+                }
+            ],
+            "date": 1730727799501,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=2\nmodel_name=timer\ntoken_num=7\ntoken_len=96\nseq_len=$((token_num * token_len))\n# training one model with a context length\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ../../TS-Library/dataset/Solar/ \\\n  --data_path solar_AL.txt \\\n  --model_id Solar \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len 96 \\\n  --e_layers 6 \\\n  --d_model 512 \\\n  --d_ff 1024 \\\n  --batch_size 32 \\\n  --learning_rate 0.00001 \\\n  --lradj type1 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last"
+        }
+    ]
+}

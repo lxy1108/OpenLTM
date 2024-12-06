@@ -1,0 +1,82 @@
+{
+    "sourceFile": "scripts/supervised/rolling_forecast/timer_xl_ecl.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 16,
+            "patches": [
+                {
+                    "date": 1730781136338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730781161682,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,13 +29,13 @@\n   --use_norm \\\n   --valid_last\n \n # testing the model on all forecast lengths\n-for test_pred_len in 96 192 336 720\n+for test_pred_len in 192 336 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./dataset/electricity/ \\\n   --data_path electricity.csv \\\n   --model_id ECL \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1730781191079,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer_xl\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730781244476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n # training one model with a context length\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n-  --root_path ./dataset/electricity/ \\\n+  --root_path ../../TS-Library/dataset/electricity/ \\\n   --data_path electricity.csv \\\n   --model_id ECL \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n"
+                },
+                {
+                    "date": 1730811648102,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,40 +3,40 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-python -u run.py \\\n-  --task_name forecast \\\n-  --is_training 1 \\\n-  --root_path ../../TS-Library/dataset/electricity/ \\\n-  --data_path electricity.csv \\\n-  --model_id ECL \\\n-  --model $model_name \\\n-  --data MultivariateDatasetBenchmark  \\\n-  --seq_len $seq_len \\\n-  --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n-  --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n-  --e_layers 5 \\\n-  --d_model 512 \\\n-  --d_ff 2048 \\\n-  --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n-  --train_epochs 10 \\\n-  --gpu 0 \\\n-  --cosine \\\n-  --tmax 10 \\\n-  --use_norm \\\n-  --valid_last\n+# python -u run.py \\\n+#   --task_name forecast \\\n+#   --is_training 1 \\\n+#   --root_path ../../TS-Library/dataset/electricity/ \\\n+#   --data_path electricity.csv \\\n+#   --model_id ECL \\\n+#   --model $model_name \\\n+#   --data MultivariateDatasetBenchmark  \\\n+#   --seq_len $seq_len \\\n+#   --input_token_len $token_len \\\n+#   --output_token_len $token_len \\\n+#   --test_seq_len $seq_len \\\n+#   --test_pred_len 96 \\\n+#   --e_layers 5 \\\n+#   --d_model 512 \\\n+#   --d_ff 2048 \\\n+#   --batch_size 4 \\\n+#   --learning_rate 0.0005 \\\n+#   --train_epochs 10 \\\n+#   --gpu 0 \\\n+#   --cosine \\\n+#   --tmax 10 \\\n+#   --use_norm \\\n+#   --valid_last\n \n # testing the model on all forecast lengths\n for test_pred_len in 192 336 720\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n-  --root_path ./dataset/electricity/ \\\n+  --root_path ../../TS-Library/dataset/electricity/ \\\n   --data_path electricity.csv \\\n   --model_id ECL \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n"
+                },
+                {
+                    "date": 1730811659872,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n #   --use_norm \\\n #   --valid_last\n \n # testing the model on all forecast lengths\n-for test_pred_len in 192 336 720\n+for test_pred_len in 96 192 336 720\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n"
+                },
+                {
+                    "date": 1730811666030,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer_xl\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730811715509,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,6 +55,6 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_ECL_timer_xl_Custom_Multi_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n+  --test_dir forecast_ECL_timer_xl_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730855799040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,39 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n+python -u run.py \\\n+  --task_name forecast \\\n+  --is_training 1 \\\n+  --root_path ../../TS-Library/dataset/electricity/ \\\n+  --data_path electricity.csv \\\n+  --model_id ECL \\\n+  --model $model_name \\\n+  --data MultivariateDatasetBenchmark  \\\n+  --seq_len $seq_len \\\n+  --input_token_len $token_len \\\n+  --output_token_len $token_len \\\n+  --test_seq_len $seq_len \\\n+  --test_pred_len 96 \\\n+  --e_layers 5 \\\n+  --d_model 512 \\\n+  --d_ff 2048 \\\n+  --batch_size 4 \\\n+  --learning_rate 0.0005 \\\n+  --train_epochs 10 \\\n+  --gpu 0 \\\n+  --cosine \\\n+  --tmax 10 \\\n+  --use_norm \\\n+  --valid_last\n+\n+# testing the model on all forecast lengths\n+# for test_pred_len in 96 192 336 720\n+# do\n # python -u run.py \\\n #   --task_name forecast \\\n-#   --is_training 1 \\\n+#   --is_training 0 \\\n #   --root_path ../../TS-Library/dataset/electricity/ \\\n #   --data_path electricity.csv \\\n #   --model_id ECL \\\n #   --model $model_name \\\n@@ -15,9 +43,9 @@\n #   --seq_len $seq_len \\\n #   --input_token_len $token_len \\\n #   --output_token_len $token_len \\\n #   --test_seq_len $seq_len \\\n-#   --test_pred_len 96 \\\n+#   --test_pred_len $test_pred_len \\\n #   --e_layers 5 \\\n #   --d_model 512 \\\n #   --d_ff 2048 \\\n #   --batch_size 4 \\\n@@ -26,35 +54,7 @@\n #   --gpu 0 \\\n #   --cosine \\\n #   --tmax 10 \\\n #   --use_norm \\\n-#   --valid_last\n-\n-# testing the model on all forecast lengths\n-for test_pred_len in 96 192 336 720\n-do\n-python -u run.py \\\n-  --task_name forecast \\\n-  --is_training 0 \\\n-  --root_path ../../TS-Library/dataset/electricity/ \\\n-  --data_path electricity.csv \\\n-  --model_id ECL \\\n-  --model $model_name \\\n-  --data MultivariateDatasetBenchmark  \\\n-  --seq_len $seq_len \\\n-  --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n-  --test_seq_len $seq_len \\\n-  --test_pred_len $test_pred_len \\\n-  --e_layers 5 \\\n-  --d_model 512 \\\n-  --d_ff 2048 \\\n-  --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n-  --train_epochs 10 \\\n-  --gpu 0 \\\n-  --cosine \\\n-  --tmax 10 \\\n-  --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_ECL_timer_xl_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n-done\n\\ No newline at end of file\n+#   --valid_last \\\n+#   --test_dir forecast_ECL_timer_xl_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n+# done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730855808381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/electricity/ \\\n   --data_path electricity.csv \\\n-  --model_id ECL \\\n+  --model_id ECL_abspe \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730860427114,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer_xl\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730860435402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer_xl\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/electricity/ \\\n   --data_path electricity.csv \\\n-  --model_id ECL_abspe \\\n+  --model_id ECL_relpe \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730876973022,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/electricity/ \\\n   --data_path electricity.csv \\\n-  --model_id ECL_relpe \\\n+  --model_id ECL_abspe \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730876987065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n # training one model with a context length\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/electricity/ \\\n   --data_path electricity.csv \\\n   --model_id ECL_abspe \\\n   --model $model_name \\\n@@ -15,9 +15,9 @@\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n+  --test_pred_len 720 \\\n   --e_layers 5 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n"
+                },
+                {
+                    "date": 1730877010918,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,10 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir forecast_ECL_abspe_timer_xl_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730877019231,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer_xl\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730881298139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_ECL_abspe_timer_xl_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n+  --test_dir forecast_ECL_relpe_timer_xl_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                }
+            ],
+            "date": 1730781136338,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=0\nmodel_name=timer_xl\ntoken_num=7\ntoken_len=96\nseq_len=$((token_num * token_len))\n# training one model with a context length\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ./dataset/electricity/ \\\n  --data_path electricity.csv \\\n  --model_id ECL \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len 96 \\\n  --e_layers 5 \\\n  --d_model 512 \\\n  --d_ff 2048 \\\n  --batch_size 4 \\\n  --learning_rate 0.0005 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last\n\n# testing the model on all forecast lengths\nfor test_pred_len in 96 192 336 720\ndo\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ./dataset/electricity/ \\\n  --data_path electricity.csv \\\n  --model_id ECL \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len $test_pred_len \\\n  --e_layers 5 \\\n  --d_model 512 \\\n  --d_ff 2048 \\\n  --batch_size 4 \\\n  --learning_rate 0.0005 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last \\\n  --test_dir forecast_ECL_timer_xl_Custom_Multi_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\ndone"
+        }
+    ]
+}

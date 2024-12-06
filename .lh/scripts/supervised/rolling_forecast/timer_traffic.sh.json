@@ -1,0 +1,598 @@
+{
+    "sourceFile": "scripts/supervised/rolling_forecast/timer_traffic.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 145,
+            "patches": [
+                {
+                    "date": 1730077888624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730077895982,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,6 +55,6 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_ECL_timer_Custom_Multi_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n+  --test_dir forecast_Traffic_timer_Custom_Multi_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730086635298,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,32 +29,32 @@\n   --use_norm \\\n   --valid_last\n \n # testing the model on all forecast lengths\n-for test_pred_len in 96 192 336 720\n-do\n-python -u run.py \\\n-  --task_name forecast \\\n-  --is_training 1 \\\n-  --root_path ../../TS-Library/dataset/traffic/ \\\n-  --data_path traffic.csv \\\n-  --model_id Traffic \\\n-  --model $model_name \\\n-  --data MultivariateDatasetBenchmark  \\\n-  --seq_len $seq_len \\\n-  --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n-  --test_seq_len $seq_len \\\n-  --test_pred_len $test_pred_len \\\n-  --e_layers 5 \\\n-  --d_model 512 \\\n-  --d_ff 2048 \\\n-  --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n-  --train_epochs 10 \\\n-  --gpu 0 \\\n-  --cosine \\\n-  --tmax 10 \\\n-  --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_Traffic_timer_Custom_Multi_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\n-done\n\\ No newline at end of file\n+# for test_pred_len in 96 192 336 720\n+# do\n+# python -u run.py \\\n+#   --task_name forecast \\\n+#   --is_training 1 \\\n+#   --root_path ../../TS-Library/dataset/traffic/ \\\n+#   --data_path traffic.csv \\\n+#   --model_id Traffic \\\n+#   --model $model_name \\\n+#   --data MultivariateDatasetBenchmark  \\\n+#   --seq_len $seq_len \\\n+#   --input_token_len $token_len \\\n+#   --output_token_len $token_len \\\n+#   --test_seq_len $seq_len \\\n+#   --test_pred_len $test_pred_len \\\n+#   --e_layers 5 \\\n+#   --d_model 512 \\\n+#   --d_ff 2048 \\\n+#   --batch_size 4 \\\n+#   --learning_rate 0.0005 \\\n+#   --train_epochs 10 \\\n+#   --gpu 0 \\\n+#   --cosine \\\n+#   --tmax 10 \\\n+#   --use_norm \\\n+#   --valid_last \\\n+#   --test_dir forecast_Traffic_timer_Custom_Multi_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+# done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730121665889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n-  --d_ff 2048 \\\n+  --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1730121694795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n-token_num=7\n+token_num=1\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n python -u run.py \\\n"
+                },
+                {
+                    "date": 1730121720899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=1\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730121764611,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n-token_num=1\n+token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n python -u run.py \\\n"
+                },
+                {
+                    "date": 1730384501123,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,11 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --dp \\\n+  --devices 0,1\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730384588316,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+# export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730421957073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic \\\n+  --model_id Traffic_lastcross \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730422943051,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_lastcross \\\n+  --model_id Traffic_last \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730423002309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n-  --devices 0,1\n+  --devices 2,3\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730423018203,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n+  --lradj type4\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730423092031,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_last \\\n+  --model_id Traffic_alter \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -21,9 +21,9 @@\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n-  --lradj type4\n+  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730423106776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_alter \\\n+  --model_id Traffic_alter_lradj4 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730423244997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --lradj type4 \\\n   --train_epochs 10 \\\n-  --gpu 0 \\\n+  --gpu 2 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n"
+                },
+                {
+                    "date": 1730423292611,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-# export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -23,15 +23,15 @@\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --lradj type4 \\\n   --train_epochs 10 \\\n-  --gpu 2 \\\n+  --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n-  --devices 2,3\n+  --devices 0,1\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730431468556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_alter_lradj4 \\\n+  --model_id Traffic_lastcross \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -28,10 +28,10 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --dp \\\n-  --devices 0,1\n+  # --dp \\\n+  # --devices 0,1\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730431511189,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n # training one model with a context length\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_lastcross \\\n   --model $model_name \\\n@@ -28,8 +28,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n+  --test_dir forecast_Traffic_lastcross_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n   # --dp \\\n   # --devices 0,1\n \n # testing the model on all forecast lengths\n"
+                },
+                {
+                    "date": 1730431836114,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 0 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_lastcross \\\n+  --model_id Traffic_uni \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730431843698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,11 +28,10 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_Traffic_lastcross_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n-  # --dp \\\n-  # --devices 0,1\n+  --dp \\\n+  --devices 0,1\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730431853102,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_uni \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1730439425876,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,10 @@\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n-  --devices 0,1\n+  --devices 0,1 \\\n+  --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730439443888,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_uni \\\n+  --model_id Traffic_finetune_last \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730439474136,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,8 @@\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n-  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730439555474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_finetune_last \\\n+  --model_id Traffic_last_lradj4 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730439565874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n+  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730439574935,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -29,10 +29,10 @@\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n-  --devices 0,1 \\\n-  --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n+  --devices 0,1\n+  # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730439942352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_last_lradj4 \\\n+  --model_id Traffic_finetune_last \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -29,10 +29,10 @@\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n-  --devices 0,1\n-  # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n+  --devices 0,1 \\\n+  --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730439953153,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,17 +21,17 @@\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n-  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n   --devices 0,1 \\\n+  --adaptation \\\n   --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n"
+                },
+                {
+                    "date": 1730439973760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730444478814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n   --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n+  --lradj4 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n"
+                },
+                {
+                    "date": 1730444485696,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,11 +20,10 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n+  --learning_rate 0.001 \\\n   --train_epochs 10 \\\n-  --lradj4 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n"
+                },
+                {
+                    "date": 1730446587655,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n-  --learning_rate 0.001 \\\n+  --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730446600940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n+  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730553717705,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_finetune_last \\\n+  --model_id Traffic_last \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -31,9 +31,10 @@\n   --valid_last \\\n   --dp \\\n   --devices 0,1 \\\n   --adaptation \\\n-  --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n+  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1730554597301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,11 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 4 \\\n-  --d_model 512 \\\n-  --d_ff 1024 \\\n+  --e_layers 8 \\\n+  --d_model 1024 \\\n+  --d_ff 2048 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --lradj type4 \\\n   --train_epochs 10 \\\n"
+                },
+                {
+                    "date": 1730555201691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730557063214,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n+  --learning_rate 0.00003 \\\n   --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730557070594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730592066778,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,11 +29,11 @@\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n-  --devices 0,1 \\\n-  --adaptation \\\n-  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  --devices 0,1\n+  # --adaptation \\\n+  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n"
+                },
+                {
+                    "date": 1730592077485,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.00003 \\\n+  --learning_rate 0.00005 \\\n   --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730592129782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -21,19 +21,18 @@\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n   --learning_rate 0.00005 \\\n-  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n-  --devices 0,1\n-  # --adaptation \\\n-  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  --devices 0,1 \\\n+  --adaptation \\\n+  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n"
+                },
+                {
+                    "date": 1730615728404,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.00005 \\\n+  --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730616446783,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,9 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n+  --lradj type4 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n   --devices 0,1 \\\n"
+                },
+                {
+                    "date": 1730616456461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_last \\\n+  --model_id Traffic_last_lradj4 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730616462033,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730636574911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_last_lradj4 \\\n+  --model_id Traffic_last \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -20,14 +20,13 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0001 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --lradj type4 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n   --devices 0,1 \\\n"
+                },
+                {
+                    "date": 1730636585842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_last \\\n+  --model_id Traffic_finetune_dynamic \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730636928122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.00005 \\\n+  --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730636940641,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_finetune_dynamic \\\n+  --model_id Traffic_dynamic \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -29,10 +29,10 @@\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n   --devices 0,1 \\\n-  --adaptation \\\n-  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  # --adaptation \\\n+  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n"
+                },
+                {
+                    "date": 1730636949778,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n-  --devices 0,1 \\\n+  --devices 0,1\n   # --adaptation \\\n   # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n"
+                },
+                {
+                    "date": 1730637097473,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,11 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 8 \\\n-  --d_model 1024 \\\n-  --d_ff 2048 \\\n+  --e_layers 4 \\\n+  --d_model 512 \\\n+  --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1730679346317,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -27,12 +27,12 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --dp \\\n-  --devices 0,1\n-  # --adaptation \\\n-  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  # --dp \\\n+  # --devices 0,1 \\\n+  --adaptation \\\n+  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n"
+                },
+                {
+                    "date": 1730679362941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_dynamic \\\n+  --model_id Traffic_finetune_increase \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730679382865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,13 +16,13 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 4 \\\n-  --d_model 512 \\\n-  --d_ff 1024 \\\n+  --e_layers 8 \\\n+  --d_model 1024 \\\n+  --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n+  --learning_rate 0.005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730679389747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.005 \\\n+  --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730679445960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730679476889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,10 +27,8 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  # --dp \\\n-  # --devices 0,1 \\\n   --adaptation \\\n   --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n"
+                },
+                {
+                    "date": 1730679665310,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,10 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n+  --dp \\\n+  --devices 0,1 \\\n   --adaptation \\\n   --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n"
+                },
+                {
+                    "date": 1730679672208,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730679706864,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730679724504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,23 +16,23 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 8 \\\n-  --d_model 1024 \\\n-  --d_ff 2048 \\\n+  --e_layers 4 \\\n+  --d_model 512 \\\n+  --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --dp \\\n-  --devices 0,1 \\\n-  --adaptation \\\n-  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  # --dp \\\n+  # --devices 0,1 \\\n+  # --adaptation \\\n+  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n"
+                },
+                {
+                    "date": 1730679730707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n-  --learning_rate 0.00005 \\\n+  --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730679773053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730685962969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,10 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0001 \\\n+  --learning_rate 0.0003 \\\n+  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730685969801,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0003 \\\n   --lradj type4 \\\n-  --train_epochs 10 \\\n+  --train_epochs 20 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n"
+                },
+                {
+                    "date": 1730689908773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0003 \\\n+  --learning_rate 0.0005 \\\n   --lradj type4 \\\n   --train_epochs 20 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730689924792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730689958725,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_finetune_increase \\\n+  --model_id Traffic_increase \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730690038549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1,2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_increase \\\n+  --model_id Traffic_increase4 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730690049566,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,11 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 4 \\\n-  --d_model 512 \\\n-  --d_ff 1024 \\\n+  --e_layers 8 \\\n+  --d_model 1024 \\\n+  --d_ff 2048 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --lradj type4 \\\n   --train_epochs 20 \\\n"
+                },
+                {
+                    "date": 1730690064251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,20 +20,19 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n-  --lradj type4 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 20 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  # --dp \\\n-  # --devices 0,1 \\\n-  # --adaptation \\\n-  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  --dp \\\n+  --devices 0,1 \\\n+  --adaptation \\\n+  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n"
+                },
+                {
+                    "date": 1730690122423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1,2\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730694641366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,13 +16,13 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 8 \\\n-  --d_model 1024 \\\n-  --d_ff 2048 \\\n-  --batch_size 4 \\\n-  --learning_rate 0.00005 \\\n+  --e_layers 4 \\\n+  --d_model 512 \\\n+  --d_ff 1024 \\\n+  --batch_size 8 \\\n+  --learning_rate 0.0005 \\\n   --train_epochs 20 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730694649809,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -27,12 +27,12 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --dp \\\n-  --devices 0,1 \\\n-  --adaptation \\\n-  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  # --dp \\\n+  # --devices 0,1 \\\n+  # --adaptation \\\n+  # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n"
+                },
+                {
+                    "date": 1730697149522,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,10 +27,10 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  # --dp \\\n-  # --devices 0,1 \\\n+  --dp \\\n+  --devices 0,1\n   # --adaptation \\\n   # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n"
+                },
+                {
+                    "date": 1730697158037,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 8 \\\n   --learning_rate 0.0005 \\\n+  --lradj type4 \\\n   --train_epochs 20 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730697189714,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_increase4 \\\n+  --model_id Traffic_bsz8 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730697208268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_bsz8 \\\n+  --model_id Traffic \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730708590746,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1730708610367,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,19 +19,19 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n-  --batch_size 8 \\\n+  --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --lradj type4 \\\n   --train_epochs 20 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --dp \\\n-  --devices 0,1\n+  --valid_last\n+  # --dp \\\n+  # --devices 0,1\n   # --adaptation \\\n   # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n   # --pretrain_model_path checkpoints/forecast_Traffic_uni_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0/checkpoint.pth\n \n"
+                },
+                {
+                    "date": 1730708625554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --lradj type4 \\\n-  --train_epochs 20 \\\n+  --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n"
+                },
+                {
+                    "date": 1730708651353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,10 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir forecast_Traffic_last_lradj4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n   # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n"
+                },
+                {
+                    "date": 1730708970358,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,10 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n+for test_pred_len in 192 336 720\n+do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n@@ -29,8 +31,9 @@\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --test_dir forecast_Traffic_last_lradj4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n+done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n   # --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n"
+                },
+                {
+                    "date": 1730709000109,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n+  --test_pred_len $test_pred_len \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 4 \\\n"
+                },
+                {
+                    "date": 1730709955892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,11 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_Traffic_last_lradj4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n+  --dp \\\n+  --devices 0,1\n+  # --test_dir forecast_Traffic_last_lradj4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1730711726426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,13 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 192 336 720\n+for test_pred_len in 96\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1730711740746,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,11 +29,9 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --dp \\\n-  --devices 0,1\n+  --valid_last\n   # --test_dir forecast_Traffic_last_lradj4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n"
+                },
+                {
+                    "date": 1730711759916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,12 +20,11 @@\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --e_layers 4 \\\n   --d_model 512 \\\n-  --d_ff 1024 \\\n+  --d_ff 2048 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n-  --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730711766610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730941843079,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic \\\n+  --model_id Traffic_rel \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730941911089,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --e_layers 4 \\\n   --d_model 512 \\\n-  --d_ff 2048 \\\n+  --d_ff 1024 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1730941947845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,17 +20,19 @@\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --e_layers 4 \\\n   --d_model 512 \\\n-  --d_ff 1024 \\\n+  --d_ff 2048 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --dp \\\n+  --devices 0,1\n   # --test_dir forecast_Traffic_last_lradj4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n"
+                },
+                {
+                    "date": 1730955353249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -24,8 +24,9 @@\n   --d_ff 2048 \\\n   --batch_size 4 \\\n   --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n+  --lradj type4 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n"
+                },
+                {
+                    "date": 1730955366381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -10,9 +10,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_rel \\\n+  --model_id Traffic_rel4 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730955421808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,13 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 96\n+for test_pred_len in 192 336 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1730955449387,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,11 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --dp \\\n-  --devices 0,1\n-  # --test_dir forecast_Traffic_last_lradj4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n+  --test_dir \n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1730955469580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir \n+  --test_dir forecast_Traffic_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1730955476782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730955484582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 192 336 720\n+for test_pred_len in 192 336\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n"
+                },
+                {
+                    "date": 1730956066568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 192 336\n+for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n"
+                },
+                {
+                    "date": 1730956074764,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730969486180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_Traffic_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --test_dir forecast_Traffic_rel4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1730969496243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730969501580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730969508631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 720\n+for test_pred_len in 336 192\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n"
+                },
+                {
+                    "date": 1731077952701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,12 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 336 192\n-do\n+for test_pred_len in 720\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1731077960743,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n+  --output_token_len $test_pred_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --e_layers 4 \\\n   --d_model 512 \\\n"
+                },
+                {
+                    "date": 1731077981739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -29,9 +29,10 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_Traffic_rel4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --dp \\\n+  --devices 0,1\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731077999482,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n for test_pred_len in 720\n+do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n"
+                },
+                {
+                    "date": 1731108119908,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --dp \\\n-  --devices 0,1\n+  --test_dir\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731108127359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len $test_pred_len \\\n+  --output_token_len 720 \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --e_layers 4 \\\n   --d_model 512 \\\n@@ -30,9 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir\n+  --test_dir \n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731108134543,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 720\n+for test_pred_len in 96 192 336\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n"
+                },
+                {
+                    "date": 1731108159237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -30,9 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir \n+  --test_dir forecast_Traffic_rel4_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr0.0005_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731108289795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n for test_pred_len in 96 192 336\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1731111075369,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 96 192 336\n+for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n"
+                },
+                {
+                    "date": 1731111092308,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n@@ -30,9 +30,10 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_Traffic_rel4_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr0.0005_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --dp \\\n+  --devices 0,1\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731144881248,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1731144888550,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 720\n+for test_pred_len in 96 192 336 720\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n"
+                },
+                {
+                    "date": 1731144899817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -30,10 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --dp \\\n-  --devices 0,1\n+  --test_dir forecast_Traffic_rel4_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr0.0005_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731149478812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 96 192 336 720\n+for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n"
+                },
+                {
+                    "date": 1731149485989,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n@@ -29,10 +29,9 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_Traffic_rel4_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr0.0005_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --valid_last\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731149501390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,11 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --dp \\\n+  --devices 0,1\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731164684253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n+  --learning_rate 0.0003 \\\n   --train_epochs 10 \\\n   --lradj type4 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731199001460,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -7,9 +7,9 @@\n for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1731199050131,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --dp \\\n-  --devices 0,1\n+  --test_dir forecast_Traffic_rel4_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr0.0003_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731199059050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 720\n+for test_pred_len in 96 192 336 720\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n"
+                },
+                {
+                    "date": 1731201068754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n for test_pred_len in 96 192 336 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n@@ -30,9 +30,10 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_Traffic_rel4_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr0.0003_bt4_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --dp \\\n+  --devices 0,1\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731201077558,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=2,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 96 192 336 720\n+for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n"
+                },
+                {
+                    "date": 1731812794487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n@@ -30,10 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --dp \\\n-  --devices 0,1\n+  --test_dir scripts/supervised/rolling_forecast/timer_ecl.sh\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731813289896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir scripts/supervised/rolling_forecast/timer_ecl.sh\n+  --test_dir forecast_utsd_timer_Utsd_sl672_it96_ot720_lr5e-05_bt16384_wd0_el8_dm1024_dff2048_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1731813417605,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,10 @@\n   --input_token_len $token_len \\\n   --output_token_len 720 \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n-  --e_layers 4 \\\n-  --d_model 512 \\\n+  --e_layers 8 \\\n+  --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n   --learning_rate 0.0003 \\\n   --train_epochs 10 \\\n"
+                },
+                {
+                    "date": 1731813626810,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,10 @@\n   --input_token_len $token_len \\\n   --output_token_len 720 \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n-  --e_layers 8 \\\n-  --d_model 1024 \\\n+  --e_layers 6 \\\n+  --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n   --learning_rate 0.0003 \\\n   --train_epochs 10 \\\n@@ -30,9 +30,9 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_utsd_timer_Utsd_sl672_it96_ot720_lr5e-05_bt16384_wd0_el8_dm1024_dff2048_nh8_cosTrue_test_0\n+  --test_dir forecast_ECL_rel_rand_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr0.0001_bt8_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1732889858419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2,3\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -7,9 +7,9 @@\n for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n   --model_id Traffic_rel4 \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732890219126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732890228045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_rel4 \\\n+  --model_id Traffic \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -29,10 +29,9 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_ECL_rel_rand_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr0.0001_bt8_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0\n+  --valid_last\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1732961755074,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic \\\n+  --model_id Traffic——37 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1732961760602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic——37 \\\n+  --model_id Traffic_37 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733061994207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733109546451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -10,9 +10,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic_37 \\\n+  --model_id Traffic \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733133928049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -10,9 +10,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/traffic/ \\\n   --data_path traffic.csv \\\n-  --model_id Traffic \\\n+  --model_id Traffic_l \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733372097139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733460003085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733470441504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,11 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --dp \\\n+  --devices 0,1\n done\n   # --dp \\\n   # --devices 0,1\n   # --adaptation \\\n"
+                },
+                {
+                    "date": 1733470449670,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=3,0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                }
+            ],
+            "date": 1730077888624,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=0\nmodel_name=timer\ntoken_num=7\ntoken_len=96\nseq_len=$((token_num * token_len))\n# training one model with a context length\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ../../TS-Library/dataset/traffic/ \\\n  --data_path traffic.csv \\\n  --model_id Traffic \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len 96 \\\n  --e_layers 4 \\\n  --d_model 512 \\\n  --d_ff 2048 \\\n  --batch_size 4 \\\n  --learning_rate 0.0005 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last\n\n# testing the model on all forecast lengths\nfor test_pred_len in 96 192 336 720\ndo\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ../../TS-Library/dataset/traffic/ \\\n  --data_path traffic.csv \\\n  --model_id Traffic \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len $test_pred_len \\\n  --e_layers 5 \\\n  --d_model 512 \\\n  --d_ff 2048 \\\n  --batch_size 4 \\\n  --learning_rate 0.0005 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last \\\n  --test_dir forecast_ECL_timer_Custom_Multi_sl672_it96_ot96_lr0.0005_bt4_wd0_el5_dm512_dff2048_nh8_cosTrue_test_0\ndone"
+        }
+    ]
+}

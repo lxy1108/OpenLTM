@@ -1,0 +1,26 @@
+{
+    "sourceFile": "scripts/supervised/rolling_forecast/timer_xl_pems.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1733312422225,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733312446563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer_xl\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -7,10 +7,10 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n-  --data_path PEMS03.npz \\\n-  --model_id PEMS03 \\\n+  --data_path PEMS04.npz \\\n+  --model_id PEMS04 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733320234958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n # training one model with a context length\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/PEMS/ \\\n   --data_path PEMS04.npz \\\n   --model_id PEMS04 \\\n   --model $model_name \\\n"
+                }
+            ],
+            "date": 1733312422225,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=0\nmodel_name=timer_xl\ntoken_num=7\ntoken_len=96\nseq_len=$((token_num * token_len))\n# training one model with a context length\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ../../TS-Library/dataset/PEMS/ \\\n  --data_path PEMS03.npz \\\n  --model_id PEMS03 \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len 96 \\\n  --e_layers 6 \\\n  --d_model 512 \\\n  --d_ff 2048 \\\n  --batch_size 6 \\\n  --learning_rate 0.0005 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last \\\n  --test_dir forecast_PEMS03_timer_xl_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt6_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0"
+        }
+    ]
+}

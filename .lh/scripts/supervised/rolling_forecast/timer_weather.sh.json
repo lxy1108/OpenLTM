@@ -1,0 +1,106 @@
+{
+    "sourceFile": "scripts/supervised/rolling_forecast/timer_weather.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 22,
+            "patches": [
+                {
+                    "date": 1730710973537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730711007382,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,12 +16,12 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 5 \\\n+  --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n-  --batch_size 4 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0005 \\\n   --lradj type4 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1730711018795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 32 \\\n   --learning_rate 0.0005 \\\n-  --lradj type4 \\\n+  --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1730711024059,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730711663073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n   --batch_size 32 \\\n   --learning_rate 0.0005 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n+  --patience 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n"
+                },
+                {
+                    "date": 1730711685459,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/weather/ \\\n   --data_path weather.csv \\\n-  --model_id WTH \\\n+  --model_id WTH_1 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -28,5 +28,32 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n+  --valid_last\n+\n+python -u run.py \\\n+  --task_name forecast \\\n+  --is_training 1 \\\n+  --root_path ../../TS-Library/dataset/weather/ \\\n+  --data_path weather.csv \\\n+  --model_id WTH_4 \\\n+  --model $model_name \\\n+  --data MultivariateDatasetBenchmark  \\\n+  --seq_len $seq_len \\\n+  --input_token_len $token_len \\\n+  --output_token_len $token_len \\\n+  --test_seq_len $seq_len \\\n+  --test_pred_len 96 \\\n+  --e_layers 4 \\\n+  --d_model 512 \\\n+  --d_ff 1024 \\\n+  --batch_size 32 \\\n+  --learning_rate 0.0005 \\\n+  --lradj type4 \\\n+  --train_epochs 10 \\\n+  --patience 10 \\\n+  --gpu 0 \\\n+  --cosine \\\n+  --tmax 10 \\\n+  --use_norm \\\n   --valid_last\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730719970633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,13 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n+for test_pred_len in 192 336 720\n+do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/weather/ \\\n   --data_path weather.csv \\\n   --model_id WTH_1 \\\n   --model $model_name \\\n@@ -28,13 +30,14 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir forecast_WTH_1_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt32_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/weather/ \\\n   --data_path weather.csv \\\n   --model_id WTH_4 \\\n   --model $model_name \\\n@@ -55,5 +58,8 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n\\ No newline at end of file\n+  --valid_last \\\n+  --test_dir forecast_WTH_4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt32_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n+\n+done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730719976474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730720045654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n+  --test_pred_len $test_pred_len \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 32 \\\n@@ -45,9 +45,9 @@\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n+  --test_pred_len $test_pred_len \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 32 \\\n"
+                },
+                {
+                    "date": 1731660613023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 192 336 720\n+for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 0 \\\n@@ -15,9 +15,9 @@\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n+  --output_token_len $test_pred_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --e_layers 4 \\\n   --d_model 512 \\\n@@ -30,36 +30,6 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_WTH_1_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt32_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n-\n-python -u run.py \\\n-  --task_name forecast \\\n-  --is_training 0 \\\n-  --root_path ../../TS-Library/dataset/weather/ \\\n-  --data_path weather.csv \\\n-  --model_id WTH_4 \\\n-  --model $model_name \\\n-  --data MultivariateDatasetBenchmark  \\\n-  --seq_len $seq_len \\\n-  --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n-  --test_seq_len $seq_len \\\n-  --test_pred_len $test_pred_len \\\n-  --e_layers 4 \\\n-  --d_model 512 \\\n-  --d_ff 1024 \\\n-  --batch_size 32 \\\n-  --learning_rate 0.0005 \\\n-  --lradj type4 \\\n-  --train_epochs 10 \\\n-  --patience 10 \\\n-  --gpu 0 \\\n-  --cosine \\\n-  --tmax 10 \\\n-  --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_WTH_4_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0005_bt32_wd0_el4_dm512_dff1024_nh8_cosTrue_test_0\n-\n+  --valid_last\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731660670418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,14 +5,16 @@\n seq_len=$((token_num * token_len))\n # training one model with a context length\n for test_pred_len in 720\n do\n+for lr in 1e-4\n+do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n-  --root_path ../../TS-Library/dataset/weather/ \\\n+  --is_training 1 \\\n+  --root_path ../Time-Series-Library/dataset/weather/ \\\n   --data_path weather.csv \\\n-  --model_id WTH_1 \\\n+  --model_id WTH \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -22,14 +24,14 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 32 \\\n-  --learning_rate 0.0005 \\\n+  --learning_rate $lr \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n-  --patience 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last\n+done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731660728527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n-  --root_path ../Time-Series-Library/dataset/weather/ \\\n+  --root_path ../../TS-Library/dataset/weather/ \\\n   --data_path weather.csv \\\n   --model_id WTH \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n"
+                },
+                {
+                    "date": 1732890455862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733023704614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733109561448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733371209718,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n for lr in 1e-4\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/weather/ \\\n   --data_path weather.csv \\\n   --model_id WTH \\\n   --model $model_name \\\n@@ -31,7 +31,8 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733371221068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 720\n+for test_pred_len in 96\n do\n for lr in 1e-4\n do\n python -u run.py \\\n@@ -32,7 +32,7 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir\n+  --test_dir forecast_PEMS03_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr5e-05_bt8_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733371353768,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,11 +20,14 @@\n   --input_token_len $token_len \\\n   --output_token_len $test_pred_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n-  --e_layers 4 \\\n+  --e_layers 6 \\\n   --d_model 512 \\\n-  --d_ff 1024 \\\n+  --d_ff 2048 \\\n+  # --e_layers 4 \\\n+  # --d_model 512 \\\n+  # --d_ff 1024 \\\n   --batch_size 32 \\\n   --learning_rate $lr \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n"
+                },
+                {
+                    "date": 1733371358889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,11 +23,8 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  # --e_layers 4 \\\n-  # --d_model 512 \\\n-  # --d_ff 1024 \\\n   --batch_size 32 \\\n   --learning_rate $lr \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n@@ -37,5 +34,9 @@\n   --use_norm \\\n   --valid_last \\\n   --test_dir forecast_PEMS03_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr5e-05_bt8_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0\n done\n-done\n\\ No newline at end of file\n+done\n+\n+  # --e_layers 4 \\\n+  # --d_model 512 \\\n+  # --d_ff 1024 \\\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733371417442,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,23 +20,19 @@\n   --input_token_len $token_len \\\n   --output_token_len $test_pred_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n-  --e_layers 6 \\\n+  --e_layers 4 \\\n   --d_model 512 \\\n-  --d_ff 2048 \\\n+  --d_ff 1024 \\\n   --batch_size 32 \\\n   --learning_rate $lr \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_PEMS03_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr5e-05_bt8_wd0_el6_dm512_dff2048_nh8_cosTrue_test_0\n+  --valid_last\n done\n done\n \n\\ No newline at end of file\n-  # --e_layers 4 \\\n-  # --d_model 512 \\\n-  # --d_ff 1024 \\\n"
+                },
+                {
+                    "date": 1733454391194,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n for lr in 1e-4\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/weather/ \\\n   --data_path weather.csv \\\n   --model_id WTH \\\n   --model $model_name \\\n@@ -34,4 +34,5 @@\n   --use_norm \\\n   --valid_last\n done\n done\n+\n"
+                },
+                {
+                    "date": 1733454413662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733455723576,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 96\n+for test_pred_len in 720\n do\n for lr in 1e-4\n do\n python -u run.py \\\n"
+                }
+            ],
+            "date": 1730710973537,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=1\nmodel_name=timer\ntoken_num=7\ntoken_len=96\nseq_len=$((token_num * token_len))\n# training one model with a context length\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ../../TS-Library/dataset/weather/ \\\n  --data_path weather.csv \\\n  --model_id WTH \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len 96 \\\n  --e_layers 5 \\\n  --d_model 512 \\\n  --d_ff 1024 \\\n  --batch_size 4 \\\n  --learning_rate 0.0005 \\\n  --lradj type4 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last"
+        }
+    ]
+}

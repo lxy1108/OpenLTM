@@ -1,0 +1,706 @@
+{
+    "sourceFile": "scripts/pretrain/timer_xl_era5.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 172,
+            "patches": [
+                {
+                    "date": 1731829765187,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1731829832729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,10 @@\n \n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n-  --root_path ./dataset/era5_pretrain/ \\\n-  --data_path temp_data_shuffled_normalized.npy \\\n+  --root_path ./dataset/ERA5/ERA5-Large \\\n+  --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n   --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1731829843428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=32\n token_len=96\n-seq_len=$[$token_num*$token_len]\n+seq_len=$($token_num*$token_len)\n \n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n"
+                },
+                {
+                    "date": 1731829861838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,11 +13,11 @@\n   --model $model_name \\\n   --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n+  --output_token_len 720 \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n+  --test_pred_len 720 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 40960 \\\n"
+                },
+                {
+                    "date": 1731829868231,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,12 +19,12 @@\n   --test_pred_len 720 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 40960 \\\n+  --batch_size 4 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --dp \\\n\\ No newline at end of file\n-  --devices 0,1,2,3,4,5,6,7\n+  --devices 0,1,2,3\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731829900297,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=32\n token_len=96\n-seq_len=$($token_num*$token_len)\n+seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n"
+                },
+                {
+                    "date": 1731830227906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n \n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n-  --root_path ./dataset/ERA5/ERA5-Large \\\n+  --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n   --data Era5_Pretrain  \\\n"
+                },
+                {
+                    "date": 1731830524936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 720 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 1 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731832539710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 720 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 1 \\\n+  --batch_size 4 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731832674706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=32\n+token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731832771996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=7\n+token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731894608940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=32\n+token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731894614812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 720 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731895095879,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=7\n+token_num=16\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731898259663,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=16\n+token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731898400615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=7\n+token_num=16\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731898522921,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=16\n+token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731898570367,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 720 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 64 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731910085712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=7\n+token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731910174679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,11 +13,11 @@\n   --model $model_name \\\n   --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len 720 \\\n+  --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 720 \\\n+  --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 64 \\\n"
+                },
+                {
+                    "date": 1731910230797,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 64 \\\n+  --batch_size 8 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731910962616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 4 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731926507887,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=32\n+token_num=16\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 8 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731926562087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 16 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731987094880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 16 \\\n-  --learning_rate 0.0001 \\\n+  --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1731987170999,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=16\n+token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731987177971,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=8\n+token_num=16\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731987275753,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=16\n+token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731987286060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 16 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731987342422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 64 \\\n   --learning_rate 0.0005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731987356259,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 64 \\\n-  --learning_rate 0.0005 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1732008456942,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n-  --model_id era5_pretrain \\\n+  --model_id era5_pretrain_test \\\n   --model $model_name \\\n   --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1732008465505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -24,7 +24,5 @@\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n-  --tmax 10 \\\n-  --dp \\\n-  --devices 0,1,2,3\n\\ No newline at end of file\n+  --tmax 10\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732008495690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,5 +24,6 @@\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n-  --tmax 10\n\\ No newline at end of file\n+  --tmax 10 \\\n+  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732008533193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_test \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732008649206,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,11 @@\n   --task_name forecast \\\n   --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n-  --model_id era5_pretrain_test \\\n+  --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732008823510,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 64 \\\n+  --batch_size 4 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732016065805,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 16 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732016187094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732018212914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732018231200,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732026954914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,5 +25,7 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n+  --dp \\\n+  --devices 0,1,2,3\n+  # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732026961279,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732026969016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732026975911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 16 \\\n-  --learning_rate 0.00005 \\\n+  --learning_rate 0.00002 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1732027013493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732067486474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 16 \\\n-  --learning_rate 0.00002 \\\n+  --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1732067526439,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,5 +27,5 @@\n   --cosine \\\n   --tmax 10 \\\n   --dp \\\n   --devices 0,1,2,3\n-  # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n+  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732067541912,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,7 +25,5 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --dp \\\n-  --devices 0,1,2,3\n   --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732067555615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732067594092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732067737925,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732073769445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 16 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732077264334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732090420304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732095720845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732095912130,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 16 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732108156383,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 16 \\\n+  --batch_size 8 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732108178666,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 4 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732110687845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -25,5 +25,7 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n+  --dp \\\n+  --devices 0,1,2,3\n+  # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732110696627,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,14 +5,14 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732110710113,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0001 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1732110716974,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.00005 \\\n+  --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1732110902437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,12 +16,12 @@\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 4 \\\n+  --e_layers 24 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size  \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732110929503,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,12 +16,12 @@\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 24 \\\n+  --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size  \\\n+  --batch_size 24 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732110987458,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 24 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732151114987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n@@ -19,13 +19,13 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 16 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --dp \\\n-  --devices 0,1,2,3\n+  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732151240244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732151322657,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 16 \\\n+  --batch_size 8 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732151366554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 4 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732152478940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732154567638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732157011958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732157405191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732157846091,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 64 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732160786709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 64 \\\n+  --batch_size 8 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732160801526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 4 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732160884962,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 2 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732162121283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 2 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732250064199,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 4 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732250071032,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 2 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732257273052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n-  --model_id era5_pretrain \\\n+  --model_id era5_pretrain_skip \\\n   --model $model_name \\\n   --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -25,7 +25,7 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n \n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732257287996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n@@ -25,7 +25,9 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n+  --dp \\\n+  --devices 0,1,2,3\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n \n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732257491937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,18 +10,18 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 2 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732274124631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,7 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --dp \\\n-  --devices 0,1,2,3\n+  --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n-\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732274135549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732274171849,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732274208550,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732274241673,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 8 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732274277862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732274319608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732274345447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 4 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732282440470,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732282461407,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -25,7 +25,9 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --dp \\\n+  --devices 0,1,2,3\n+  # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732282470377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n-token_num=8\n+token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732282510481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0001 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                },
+                {
+                    "date": 1732283512750,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 16 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732325347468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,14 +5,14 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732325356421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,8 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --dp \\\n-  --devices 0,1,2,3\n+  --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732325367121,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 16 \\\n+  --batch_size 4 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732325427724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 1 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732325558366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732343498140,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,14 +19,14 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 1 \\\n-  --learning_rate 0.00005 \\\n+  --batch_size 40960 \\\n+  --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732343512701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732343524938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -25,8 +25,10 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n+  --dp \\\n+  --devices 0,1,2,3\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732343533899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732343544692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n-  --model_id era5_pretrain_skip \\\n+  --model_id era5_pretrain \\\n   --model $model_name \\\n   --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1732343652815,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 40960 \\\n+  --batch_size 20480 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732409009283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,9 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --dp \\\n-  --devices 0,1,2,3\n+  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt20480_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732409034119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732409043172,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732409050282,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 20480 \\\n+  --batch_size 4096 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732423056394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732423073842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,11 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt20480_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --dp \\\n+  --devices 0,1,2,3\n+  # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt20480_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732423081988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732423180745,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4096 \\\n+  --batch_size 2048 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732423205825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 2048 \\\n+  --batch_size 512 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732433398727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,9 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --dp \\\n-  --devices 0,1,2,3\n+  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt512_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt20480_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1732433412302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,14 +5,14 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732433431002,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain_test  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732433446624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 512 \\\n+  --batch_size 128 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732665694737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,11 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt512_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --dp \\\n+  --devices 0,1,2,3\n+  # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt512_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt20480_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt24_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1732665709620,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732665742557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 128 \\\n+  --batch_size 1024 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732680504682,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,9 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --dp \\\n-  --devices 0,1,2,3\n+  --test_dir \n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt512_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt20480_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1732680531252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732680539108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732680572372,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n@@ -25,9 +25,10 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n-  --test_dir \n+  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt1024_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  \n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt512_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt20480_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1732680585152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732680619557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732680636262,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 1024 \\\n+  --batch_size 512 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732680693209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732687775849,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 512 \\\n+  --batch_size 1024 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732690898547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732708588667,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -24,10 +24,12 @@\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n-  --tmax 10 \\\n-  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt1024_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --dp \\\n+  --devices 0,1,2,3\n+  # --tmax 10 \\\n+  # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt1024_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   \n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt512_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt20480_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl3072_it96_ot96_lr5e-05_bt16_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1732708596424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n-model_name=timer\n+model_name=timer_xl\n token_num=32\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732708613445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer_xl\n-token_num=32\n+token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 1024 \\\n+  --batch_size 40960 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732774515596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,15 +19,14 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 40960 \\\n+  --batch_size 10240 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n-  --dp \\\n-  --devices 0,1,2,3\n+  --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --tmax 10 \\\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt1024_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   \n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt512_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1732774521850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732774528495,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer_xl\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732774584753,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer_xl\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732774649142,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 10240 \\\n+  --batch_size 40960 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732774693995,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer_xl\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732802779559,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,14 +5,14 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain_skip  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n@@ -24,9 +24,9 @@\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n-  --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  # --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --tmax 10 \\\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt1024_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   \n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt512_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1732802786026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 40960 \\\n+  --batch_size 24 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732802805611,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n-export CUDA_VISIBLE_DEVICES=0\n-model_name=timer_xl\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n+model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n@@ -19,13 +19,15 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 24 \\\n+  --batch_size 32 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n+  --dp \\\n+  --devices 0,1,2,3\n   # --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --tmax 10 \\\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt1024_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   \n"
+                },
+                {
+                    "date": 1732803027710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,11 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n-  --model_id era5_pretrain \\\n+  --model_id era5_pretrain_skip \\\n   --model $model_name \\\n-  --data Era5_Pretrain_skip  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732803370332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 64 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732849510669,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n   --batch_size 64 \\\n-  --learning_rate 0.0001 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --dp \\\n"
+                },
+                {
+                    "date": 1732873289729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,10 +24,9 @@\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n-  --dp \\\n-  --devices 0,1,2,3\n+  --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --tmax 10 \\\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt1024_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   \n"
+                },
+                {
+                    "date": 1732873295061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1732873320785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1732873803352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1732874160068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 64 \\\n+  --batch_size 16 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732874221772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 16 \\\n+  --batch_size 4 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732874229594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 8 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1732880605307,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -24,10 +24,11 @@\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n-  --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n-  # --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+\n+  # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --tmax 10 \\\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt1024_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   \n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt512_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1732880611291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n export CUDA_VISIBLE_DEVICES=0\n-model_name=timer\n+model_name=timer_xl\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n"
+                },
+                {
+                    "date": 1732880621711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 10240 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1733388853817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n-export CUDA_VISIBLE_DEVICES=0\n-model_name=timer_xl\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n+model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain_skip \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1733388871729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 10240 \\\n+  --batch_size 16 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1733388891056,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,11 @@\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n-  --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n+  --dp \\\n+  --devices 0,1,2,3\n+  # --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n \n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --tmax 10 \\\n   # --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl3072_it96_ot96_lr0.0001_bt1024_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n"
+                },
+                {
+                    "date": 1733389031330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export CUDA_VISIBLE_DEVICES=1,3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n-  --model_id era5_pretrain_skip \\\n+  --model_id era5_pretrain \\\n   --model $model_name \\\n   --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -25,9 +25,9 @@\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --dp \\\n-  --devices 0,1,2,3\n+  --devices 0,1\n   # --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n \n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --tmax 10 \\\n"
+                },
+                {
+                    "date": 1733389060209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain_Test  \\\n+  --data Era5_Pretrain  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1733389158300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 16 \\\n+  --batch_size 32 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1733451725217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1,3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -24,10 +24,9 @@\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n-  --dp \\\n-  --devices 0,1\n+  --test_dir forecast_era5_pretrain_timer_Era5_Pretrain_sl768_it96_ot96_lr5e-05_bt32_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --test_dir forecast_era5_pretrain_timer_xl_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt40960_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n \n   # --test_dir forecast_era5_pretrain_skip_timer_Era5_Pretrain_sl768_it96_ot96_lr0.0001_bt64_wd0_el4_dm512_dff2048_nh8_cosTrue_test_0\n   # --tmax 10 \\\n"
+                },
+                {
+                    "date": 1733451736689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,14 +5,14 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ./datasets/ERA5/ERA5-Large \\\n   --data_path pretrain.npy \\\n   --model_id era5_pretrain \\\n   --model $model_name \\\n-  --data Era5_Pretrain  \\\n+  --data Era5_Pretrain_Test  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 96 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1733451772203,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 64 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1733451981488,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 64 \\\n+  --batch_size 256 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1733452504468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733452522999,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 4 \\\n   --d_model 512 \\\n   --d_ff 2048 \\\n-  --batch_size 256 \\\n+  --batch_size 8 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1733452564362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733454222548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=8\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                }
+            ],
+            "date": 1731829765187,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=0,1,2,3\nmodel_name=timer\ntoken_num=32\ntoken_len=96\nseq_len=$[$token_num*$token_len]\n\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ./dataset/era5_pretrain/ \\\n  --data_path temp_data_shuffled_normalized.npy \\\n  --model_id era5_pretrain \\\n  --model $model_name \\\n  --data Era5_Pretrain  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len 96 \\\n  --e_layers 4 \\\n  --d_model 512 \\\n  --d_ff 2048 \\\n  --batch_size 40960 \\\n  --learning_rate 0.0001 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --dp \\\n  --devices 0,1,2,3,4,5,6,7"
+        }
+    ]
+}

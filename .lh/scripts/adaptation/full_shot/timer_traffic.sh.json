@@ -1,0 +1,62 @@
+{
+    "sourceFile": "scripts/adaptation/full_shot/timer_traffic.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 11,
+            "patches": [
+                {
+                    "date": 1730730429790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730730451451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,10 +22,11 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.0005 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n+  --lradj type4 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n"
+                },
+                {
+                    "date": 1730730456978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 4 \\\n-  --learning_rate 0.00005 \\\n+  --learning_rate 0.00002 \\\n   --train_epochs 10 \\\n   --lradj type4 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730730534228,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,6 +31,8 @@\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --adaptation \\\n-  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n+  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt \\\n+  --dp \\\n+  --devices 0,1\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730767711026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=0,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -21,9 +21,9 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 8 \\\n   --learning_rate 0.00002 \\\n   --train_epochs 10 \\\n   --lradj type4 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1730767724571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,3\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730767849407,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1\n+export CUDA_VISIBLE_DEVICES=0,3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -21,9 +21,9 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 8 \\\n+  --batch_size 4 \\\n   --learning_rate 0.00002 \\\n   --train_epochs 10 \\\n   --lradj type4 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1730767888608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,3\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -24,9 +24,8 @@\n   --d_ff 2048 \\\n   --batch_size 4 \\\n   --learning_rate 0.00002 \\\n   --train_epochs 10 \\\n-  --lradj type4 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n"
+                },
+                {
+                    "date": 1730990596013,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,6 +32,6 @@\n   --valid_last \\\n   --adaptation \\\n   --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt \\\n   --dp \\\n-  --devices 0,1\n+  --devices 0,1,2\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1730990772861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1\n+export CUDA_VISIBLE_DEVICES=0,1,2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -21,9 +21,9 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 2 \\\n   --learning_rate 0.00002 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730990778381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2\n+export CUDA_VISIBLE_DEVICES=0,1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -32,6 +32,6 @@\n   --valid_last \\\n   --adaptation \\\n   --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt \\\n   --dp \\\n-  --devices 0,1,2\n+  --devices 0,1\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731022872442,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 2 \\\n-  --learning_rate 0.00002 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n"
+                }
+            ],
+            "date": 1730730429790,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=3\nmodel_name=timer\ntoken_num=7\ntoken_len=96\nseq_len=$((token_num * token_len))\n# training one model with a context length\nfor test_pred_len in 96\ndo\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ../../TS-Library/dataset/traffic/ \\\n  --data_path traffic.csv \\\n  --model_id Traffic \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len $test_pred_len \\\n  --e_layers 8 \\\n  --d_model 1024 \\\n  --d_ff 2048 \\\n  --batch_size 4 \\\n  --learning_rate 0.0005 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last \\\n  --adaptation \\\n  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\ndone"
+        }
+    ]
+}

@@ -1,0 +1,74 @@
+{
+    "sourceFile": "scripts/supervised/rolling_forecast/timer_etth1.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1730710049668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730710057593,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$[$token_num*$token_len]\n"
+                },
+                {
+                    "date": 1730710093679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n # training one model with a context length\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n-  --root_path ./dataset/ETT-small/ \\\n+  --root_path ../../TS-Library/dataset/ETT-small/ \\\n   --data_path ETTh1.csv \\\n   --model_id ETTh1 \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n"
+                },
+                {
+                    "date": 1730710113538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n-seq_len=$[$token_num*$token_len]\n+seq_len=$((token_num * token_len))\n # training one model with a context length\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n"
+                },
+                {
+                    "date": 1730710201444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n   --d_ff 2048 \\\n   --gpu 0 \\\n   --lradj type1 \\\n   --use_norm \\\n-  --e_layers 1 \\\n+  --e_layers 2 \\\n   --valid_last\n \n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n"
+                },
+                {
+                    "date": 1730710525514,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,13 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n+for test_pred_len in 192 336 720\n+do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/ETT-small/ \\\n   --data_path ETTh1.csv \\\n   --model_id ETTh1 \\\n   --model $model_name \\\n@@ -15,9 +17,9 @@\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n+  --test_pred_len $test_pred_len \\\n   --batch_size 32 \\\n   --learning_rate 0.0001 \\\n   --train_epochs 10 \\\n   --d_model 1024 \\\n@@ -26,9 +28,9 @@\n   --lradj type1 \\\n   --use_norm \\\n   --e_layers 2 \\\n   --valid_last\n-\n+done\n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n # python -u run.py \\\n"
+                },
+                {
+                    "date": 1730710588025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,10 @@\n   --gpu 0 \\\n   --lradj type1 \\\n   --use_norm \\\n   --e_layers 2 \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir forecast_ETTh1_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0001_bt32_wd0_el2_dm1024_dff2048_nh8_cosFalse_test_0\n done\n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1733455845562,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,13 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_pred_len in 192 336 720\n+for test_pred_len in 720\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/ETT-small/ \\\n   --data_path ETTh1.csv \\\n   --model_id ETTh1 \\\n   --model $model_name \\\n@@ -27,10 +27,9 @@\n   --gpu 0 \\\n   --lradj type1 \\\n   --use_norm \\\n   --e_layers 2 \\\n-  --valid_last \\\n-  --test_dir forecast_ETTh1_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr0.0001_bt32_wd0_el2_dm1024_dff2048_nh8_cosFalse_test_0\n+  --valid_last\n done\n # testing the model on all forecast lengths\n # for test_pred_len in 96 192 336 720\n # do\n"
+                },
+                {
+                    "date": 1733455851448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733455870806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n+  --output_token_len $test_pred_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --batch_size 32 \\\n   --learning_rate 0.0001 \\\n"
+                },
+                {
+                    "date": 1733456789995,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --output_token_len $test_pred_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --batch_size 32 \\\n-  --learning_rate 0.0001 \\\n+  --learning_rate 0.0002 \\\n   --train_epochs 10 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1733458131595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --output_token_len $test_pred_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --batch_size 32 \\\n-  --learning_rate 0.0002 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1733458241696,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --output_token_len $test_pred_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --batch_size 32 \\\n-  --learning_rate 0.00005 \\\n+  --learning_rate 0.00003 \\\n   --train_epochs 10 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1733458278192,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --output_token_len $test_pred_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n   --batch_size 32 \\\n-  --learning_rate 0.00003 \\\n+  --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1733460034552,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                }
+            ],
+            "date": 1730710049668,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=0\nmodel_name=timer\ntoken_num=7\ntoken_len=96\nseq_len=$[$token_num*$token_len]\n# training one model with a context length\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ./dataset/ETT-small/ \\\n  --data_path ETTh1.csv \\\n  --model_id ETTh1 \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len 96 \\\n  --batch_size 32 \\\n  --learning_rate 0.0001 \\\n  --train_epochs 10 \\\n  --d_model 1024 \\\n  --d_ff 2048 \\\n  --gpu 0 \\\n  --lradj type1 \\\n  --use_norm \\\n  --e_layers 1 \\\n  --valid_last\n\n# testing the model on all forecast lengths\n# for test_pred_len in 96 192 336 720\n# do\n# python -u run.py \\\n#   --task_name forecast \\\n#   --is_training 0 \\\n#   --root_path ./dataset/ETT-small/ \\\n#   --data_path ETTh1.csv \\\n#   --model_id ETTh1 \\\n#   --model $model_name \\\n#   --data MultivariateDatasetBenchmark  \\\n#   --seq_len $seq_len \\\n#   --input_token_len $token_len \\\n#   --output_token_len $token_len \\\n#   --test_seq_len $seq_len \\\n#   --test_pred_len $test_pred_len \\\n#   --batch_size 32 \\\n#   --learning_rate 0.0001 \\\n#   --train_epochs 10 \\\n#   --d_model 1024 \\\n#   --d_ff 2048 \\\n#   --gpu 0 \\\n#   --lradj type1 \\\n#   --use_norm \\\n#   --e_layers 1 \\\n#   --valid_last \\\n#   --test_dir forecast_ETTh1_timer_ETTh1_Multi_sl672_it96_ot96_lr0.0001_bt32_wd0_el1_dm1024_dff2048_nh8_cosFalse_test_0\n# done"
+        }
+    ]
+}

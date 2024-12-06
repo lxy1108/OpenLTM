@@ -1,0 +1,66 @@
+{
+    "sourceFile": "models/timer_xl.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1730855678153,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730855684725,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n import torch\n from torch import nn\n from layers.Transformer_EncDec import TimerBlock, TimerLayer\n from layers.SelfAttention_Family import AttentionLayer, TimeAttention\n+from layers.Embed import PositionalEmbedding\n \n-\n class Model(nn.Module):\n     \"\"\"\n     Paper link: https://arxiv.org/abs/2410.04803\n     \"\"\"\n"
+                },
+                {
+                    "date": 1730855712378,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n         x_enc = x_enc.unfold(\n             dimension=-1, size=self.input_token_len, step=self.input_token_len)\n         N = x_enc.shape[2]\n         # [B, C, N, D]\n-        enc_out = self.embedding(x_enc)\n+        enc_out = self.embedding(x_enc) + self.position_embedding(x_enc)\n         # [B, C * N, D]\n         enc_out = enc_out.reshape(B, C * N, -1)\n         enc_out, attns = self.encoder(enc_out, n_vars=C, n_tokens=N)\n         # [B, C * N, P]\n"
+                },
+                {
+                    "date": 1730855776993,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n         x_enc = x_enc.unfold(\n             dimension=-1, size=self.input_token_len, step=self.input_token_len)\n         N = x_enc.shape[2]\n         # [B, C, N, D]\n-        enc_out = self.embedding(x_enc) + self.position_embedding(x_enc)\n+        enc_out = self.embedding(x_enc) + self.position_embedding(x_enc.reshape(B*C,N,-1)).reshape(B,C,N,-1)\n         # [B, C * N, D]\n         enc_out = enc_out.reshape(B, C * N, -1)\n         enc_out, attns = self.encoder(enc_out, n_vars=C, n_tokens=N)\n         # [B, C * N, P]\n"
+                },
+                {
+                    "date": 1730856002355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,11 @@\n         x_enc = x_enc.unfold(\n             dimension=-1, size=self.input_token_len, step=self.input_token_len)\n         N = x_enc.shape[2]\n         # [B, C, N, D]\n-        enc_out = self.embedding(x_enc) + self.position_embedding(x_enc.reshape(B*C,N,-1)).reshape(B,C,N,-1)\n+        pos = self.position_embedding(x_enc.reshape(B*C,N,-1))\n+        print(pos.shape)\n+        enc_out = self.embedding(x_enc) + pos.reshape(B,C,N,-1)\n         # [B, C * N, D]\n         enc_out = enc_out.reshape(B, C * N, -1)\n         enc_out, attns = self.encoder(enc_out, n_vars=C, n_tokens=N)\n         # [B, C * N, P]\n"
+                },
+                {
+                    "date": 1730856068413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,8 +44,9 @@\n         x_enc = x_enc.unfold(\n             dimension=-1, size=self.input_token_len, step=self.input_token_len)\n         N = x_enc.shape[2]\n         # [B, C, N, D]\n+        x_enc = x_enc.reshape(B*C,N,-1)\n         pos = self.position_embedding(x_enc.reshape(B*C,N,-1))\n         print(pos.shape)\n         enc_out = self.embedding(x_enc) + pos.reshape(B,C,N,-1)\n         # [B, C * N, D]\n"
+                },
+                {
+                    "date": 1730856095838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,13 +45,11 @@\n             dimension=-1, size=self.input_token_len, step=self.input_token_len)\n         N = x_enc.shape[2]\n         # [B, C, N, D]\n         x_enc = x_enc.reshape(B*C,N,-1)\n-        pos = self.position_embedding(x_enc.reshape(B*C,N,-1))\n-        print(pos.shape)\n-        enc_out = self.embedding(x_enc) + pos.reshape(B,C,N,-1)\n+        enc_out = self.embedding(x_enc) + self.position_embedding(x_enc)\n         # [B, C * N, D]\n-        enc_out = enc_out.reshape(B, C * N, -1)\n+        enc_out = enc_out.reshape(B, C * N, -1).reshape(B, C * N, -1)\n         enc_out, attns = self.encoder(enc_out, n_vars=C, n_tokens=N)\n         # [B, C * N, P]\n         dec_out = self.head(enc_out)\n         # [B, C, N * P]\n"
+                },
+                {
+                    "date": 1730860392613,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     def __init__(self, configs):\n         super().__init__()\n         self.input_token_len = configs.input_token_len\n         self.embedding = nn.Linear(self.input_token_len, configs.d_model)\n-        self.position_embedding = PositionalEmbedding(configs.d_model)\n+        # self.position_embedding = PositionalEmbedding(configs.d_model)\n         self.output_attention = configs.output_attention\n         self.encoder = TimerBlock(\n             [\n                 TimerLayer(\n@@ -47,9 +47,9 @@\n         # [B, C, N, D]\n         x_enc = x_enc.reshape(B*C,N,-1)\n         enc_out = self.embedding(x_enc) + self.position_embedding(x_enc)\n         # [B, C * N, D]\n-        enc_out = enc_out.reshape(B, C * N, -1).reshape(B, C * N, -1)\n+        enc_out = enc_out.reshape(B, C, N, -1).reshape(B, C * N, -1)\n         enc_out, attns = self.encoder(enc_out, n_vars=C, n_tokens=N)\n         # [B, C * N, P]\n         dec_out = self.head(enc_out)\n         # [B, C, N * P]\n"
+                },
+                {
+                    "date": 1730860407718,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,12 +44,12 @@\n         x_enc = x_enc.unfold(\n             dimension=-1, size=self.input_token_len, step=self.input_token_len)\n         N = x_enc.shape[2]\n         # [B, C, N, D]\n-        x_enc = x_enc.reshape(B*C,N,-1)\n-        enc_out = self.embedding(x_enc) + self.position_embedding(x_enc)\n+        # x_enc = x_enc.reshape(B*C,N,-1)\n+        enc_out = self.embedding(x_enc)# + self.position_embedding(x_enc)\n         # [B, C * N, D]\n-        enc_out = enc_out.reshape(B, C, N, -1).reshape(B, C * N, -1)\n+        enc_out = enc_out.reshape(B, C * N, -1)\n         enc_out, attns = self.encoder(enc_out, n_vars=C, n_tokens=N)\n         # [B, C * N, P]\n         dec_out = self.head(enc_out)\n         # [B, C, N * P]\n"
+                },
+                {
+                    "date": 1730877088573,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,12 +44,12 @@\n         x_enc = x_enc.unfold(\n             dimension=-1, size=self.input_token_len, step=self.input_token_len)\n         N = x_enc.shape[2]\n         # [B, C, N, D]\n-        # x_enc = x_enc.reshape(B*C,N,-1)\n-        enc_out = self.embedding(x_enc)# + self.position_embedding(x_enc)\n+        x_enc = x_enc.reshape(B*C,N,-1)\n+        enc_out = self.embedding(x_enc) + self.position_embedding(x_enc)\n         # [B, C * N, D]\n-        enc_out = enc_out.reshape(B, C * N, -1)\n+        enc_out = enc_out.reshape(B,C,N,-1).reshape(B, C * N, -1)\n         enc_out, attns = self.encoder(enc_out, n_vars=C, n_tokens=N)\n         # [B, C * N, P]\n         dec_out = self.head(enc_out)\n         # [B, C, N * P]\n"
+                },
+                {
+                    "date": 1730881318033,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,12 +44,12 @@\n         x_enc = x_enc.unfold(\n             dimension=-1, size=self.input_token_len, step=self.input_token_len)\n         N = x_enc.shape[2]\n         # [B, C, N, D]\n-        x_enc = x_enc.reshape(B*C,N,-1)\n-        enc_out = self.embedding(x_enc) + self.position_embedding(x_enc)\n+        # x_enc = x_enc.reshape(B*C,N,-1)\n+        enc_out = self.embedding(x_enc) #+ self.position_embedding(x_enc)\n         # [B, C * N, D]\n-        enc_out = enc_out.reshape(B,C,N,-1).reshape(B, C * N, -1)\n+        enc_out = enc_out.reshape(B, C * N, -1)\n         enc_out, attns = self.encoder(enc_out, n_vars=C, n_tokens=N)\n         # [B, C * N, P]\n         dec_out = self.head(enc_out)\n         # [B, C, N * P]\n"
+                },
+                {
+                    "date": 1731075110291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n                 ) for l in range(configs.e_layers)\n             ],\n             norm_layer=torch.nn.LayerNorm(configs.d_model)\n         )\n-        self.head = nn.Linear(configs.d_model, configs.output_token_len)\n+        self.head = nn.Linear(configs.d_model, configs.input_token_len)\n         self.use_norm = configs.use_norm\n \n     def forecast(self, x_enc, x_mark_enc, x_dec, x_mark_dec):\n         if self.use_norm:\n"
+                },
+                {
+                    "date": 1732714593666,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,5 +63,5 @@\n             return dec_out, attns\n         return dec_out\n \n     def forward(self, x_enc, x_mark_enc, x_dec, x_mark_dec, mask=None):\n-        return self.forecast(x_enc, x_mark_enc, x_dec, x_mark_dec)\n+        return [self.forecast(x_enc, x_mark_enc, x_dec, x_mark_dec)]\n"
+                }
+            ],
+            "date": 1730855678153,
+            "name": "Commit-0",
+            "content": "import torch\nfrom torch import nn\nfrom layers.Transformer_EncDec import TimerBlock, TimerLayer\nfrom layers.SelfAttention_Family import AttentionLayer, TimeAttention\n\n\nclass Model(nn.Module):\n    \"\"\"\n    Paper link: https://arxiv.org/abs/2410.04803\n    \"\"\"\n    def __init__(self, configs):\n        super().__init__()\n        self.input_token_len = configs.input_token_len\n        self.embedding = nn.Linear(self.input_token_len, configs.d_model)\n        self.position_embedding = PositionalEmbedding(configs.d_model)\n        self.output_attention = configs.output_attention\n        self.encoder = TimerBlock(\n            [\n                TimerLayer(\n                    AttentionLayer(\n                        TimeAttention(True, attention_dropout=configs.dropout, output_attention=self.output_attention, d_model=configs.d_model, num_heads=configs.n_heads, covariate=configs.covariate, flash_attention=configs.flash_attention), configs.d_model, configs.n_heads),\n                    configs.d_model,\n                    configs.d_ff,\n                    dropout=configs.dropout,\n                    activation=configs.activation\n                ) for l in range(configs.e_layers)\n            ],\n            norm_layer=torch.nn.LayerNorm(configs.d_model)\n        )\n        self.head = nn.Linear(configs.d_model, configs.output_token_len)\n        self.use_norm = configs.use_norm\n\n    def forecast(self, x_enc, x_mark_enc, x_dec, x_mark_dec):\n        if self.use_norm:\n            means = x_enc.mean(1, keepdim=True).detach()\n            x_enc = x_enc - means\n            stdev = torch.sqrt(\n                torch.var(x_enc, dim=1, keepdim=True, unbiased=False) + 1e-5)\n            x_enc /= stdev\n        B, _, C = x_enc.shape\n        # [B, C, L]\n        x_enc = x_enc.permute(0, 2, 1)\n        # [B, C, N, P]\n        x_enc = x_enc.unfold(\n            dimension=-1, size=self.input_token_len, step=self.input_token_len)\n        N = x_enc.shape[2]\n        # [B, C, N, D]\n        enc_out = self.embedding(x_enc)\n        # [B, C * N, D]\n        enc_out = enc_out.reshape(B, C * N, -1)\n        enc_out, attns = self.encoder(enc_out, n_vars=C, n_tokens=N)\n        # [B, C * N, P]\n        dec_out = self.head(enc_out)\n        # [B, C, N * P]\n        dec_out = dec_out.reshape(B, C, N, -1).reshape(B, C, -1)\n        # [B, L, C]\n        dec_out = dec_out.permute(0, 2, 1)\n\n        if self.use_norm:\n            dec_out = dec_out * stdev + means\n        if self.output_attention:\n            return dec_out, attns\n        return dec_out\n\n    def forward(self, x_enc, x_mark_enc, x_dec, x_mark_dec, mask=None):\n        return self.forecast(x_enc, x_mark_enc, x_dec, x_mark_dec)\n"
+        }
+    ]
+}

@@ -1,0 +1,202 @@
+{
+    "sourceFile": "scripts/supervised/rolling_forecast/timer_solar.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 46,
+            "patches": [
+                {
+                    "date": 1730711538006,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730711572424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -16,13 +16,13 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 4 \\\n+  --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n-  --batch_size 32 \\\n-  --learning_rate 0.0005 \\\n+  --batch_size 16 \\\n+  --learning_rate 0.0001 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730711628948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n-  --data_path solar_AL \\\n+  --data_path solar_AL.txt \\\n   --model_id Solar \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1730714017500,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 6 \\\n+  --e_layers 3 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 16 \\\n   --learning_rate 0.0001 \\\n"
+                },
+                {
+                    "date": 1730719859563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 3 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 16 \\\n-  --learning_rate 0.0001 \\\n+  --learning_rate 0.00001 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730722597449,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len 96 \\\n-  --e_layers 3 \\\n+  --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 16 \\\n   --learning_rate 0.00001 \\\n"
+                },
+                {
+                    "date": 1730722609394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 96 \\\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n-  --batch_size 16 \\\n+  --batch_size 32 \\\n   --learning_rate 0.00001 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n"
+                },
+                {
+                    "date": 1730767961657,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,10 @@\n   --test_pred_len 96 \\\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n-  --batch_size 32 \\\n-  --learning_rate 0.00001 \\\n+  --batch_size 16 \\\n+  --learning_rate 0.0001 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730767971346,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n-  --model_id Solar \\\n+  --model_id Solar_scratch \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730767976627,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730972339374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n-  --model_id Solar_scratch \\\n+  --model_id Solar_rel \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730988246350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 16 \\\n-  --learning_rate 0.0001 \\\n+  --learning_rate 0.00001 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730988277022,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1730988282547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 16 \\\n-  --learning_rate 0.00001 \\\n+  --learning_rate 0.00005 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730988477476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n+for lr in  5e-5 3e-5 2e-5\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n"
+                },
+                {
+                    "date": 1730988484491,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n for lr in  5e-5 3e-5 2e-5\n+do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n@@ -28,5 +29,6 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n\\ No newline at end of file\n+  --valid_last\n+done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731022964578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 16 \\\n-  --learning_rate 0.00005 \\\n+  --learning_rate 3 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731022992003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for lr in  5e-5 3e-5 2e-5\n+for lr in  3e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n@@ -22,9 +22,9 @@\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 16 \\\n-  --learning_rate 3 \\\n+  --learning_rate $lr \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731023023432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for lr in  3e-5\n+for lr in  1e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n   --is_training 1 \\\n"
+                },
+                {
+                    "date": 1731023050320,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1731046083246,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,15 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n+for test_len in 192 336 720\n+do\n for lr in  1e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n   --model_id Solar_rel \\\n   --model $model_name \\\n@@ -17,9 +19,9 @@\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n+  --test_pred_len $test_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n   --d_ff 1024 \\\n   --batch_size 16 \\\n@@ -30,5 +32,6 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last\n+done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731046147217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,7 +31,8 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir forecast_Solar_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr1e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731046212150,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1731046219886,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,7 +32,7 @@\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n-  --test_dir forecast_Solar_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr1e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n+  --test_dir forecast_Solar_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr3e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731050482325,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n for lr in  1e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n   --model_id Solar_rel \\\n   --model $model_name \\\n@@ -31,8 +31,7 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_Solar_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot96_lr3e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n+  --valid_last\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731050492361,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_len in 192 336 720\n+for test_len in 96\n do\n for lr in  1e-5\n do\n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731050563092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1731078042684,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_len in 96\n+for test_len in 720\n do\n for lr in  1e-5\n do\n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731078050959,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n+  --output_token_len $test_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n"
+                },
+                {
+                    "date": 1731108227291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=1\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -9,17 +9,17 @@\n for lr in  1e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n   --model_id Solar_rel \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len $test_len \\\n+  --output_token_len 720 \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_len \\\n   --e_layers 6 \\\n   --d_model 512 \\\n"
+                },
+                {
+                    "date": 1731108236202,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_len in 720\n+for test_len in 96 192 336\n do\n for lr in  1e-5\n do\n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731108246456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,7 +31,8 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir forecast_Solar_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr1e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731111122083,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_len in 96 192 336\n+for test_len in 720\n do\n for lr in  1e-5\n do\n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731111129267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n for lr in  1e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n   --model_id Solar_rel \\\n   --model $model_name \\\n@@ -31,8 +31,7 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_Solar_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr1e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n+  --valid_last\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731144802711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n for lr in  1e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n   --model_id Solar_rel \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1731144837490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_len in 720\n+for test_len in 96 192 336 720\n do\n for lr in  1e-5\n do\n python -u run.py \\\n@@ -31,7 +31,8 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir forecast_Solar_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr1e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731149518343,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n # training one model with a context length\n-for test_len in 96 192 336 720\n+for test_len in 720\n do\n for lr in  1e-5\n do\n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731639530903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,12 +9,12 @@\n for lr in  1e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n-  --model_id Solar_rel \\\n+  --model_id Solar_rel_skip \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n@@ -31,8 +31,7 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_Solar_rel_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr1e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n+  --valid_last\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732890425980,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=1\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733023682243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -12,9 +12,9 @@\n   --task_name forecast \\\n   --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n-  --model_id Solar_rel_skip \\\n+  --model_id Solar \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1733062013486,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0\n+export CUDA_VISIBLE_DEVICES=2\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733372157234,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=2\n+export CUDA_VISIBLE_DEVICES=3\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733459937648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=3\n+export CUDA_VISIBLE_DEVICES=0\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1733469102824,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,7 +31,8 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last\n+  --valid_last \\\n+  --test_dir forecast_Solar_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr1e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n done\n done\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733469108474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n for lr in  1e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 1 \\\n+  --is_training 0 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n   --model_id Solar \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1733469672456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n for lr in  1e-5\n do\n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/Solar/ \\\n   --data_path solar_AL.txt \\\n   --model_id Solar \\\n   --model $model_name \\\n"
+                },
+                {
+                    "date": 1733469678162,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,8 +31,7 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n-  --test_dir forecast_Solar_timer_MultivariateDatasetBenchmark_sl672_it96_ot720_lr1e-05_bt16_wd0_el6_dm512_dff1024_nh8_cosTrue_test_0\n+  --valid_last\n done\n done\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1730711538006,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=0\nmodel_name=timer\ntoken_num=7\ntoken_len=96\nseq_len=$((token_num * token_len))\n# training one model with a context length\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ../../TS-Library/dataset/Solar/ \\\n  --data_path solar_AL \\\n  --model_id Solar \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len 96 \\\n  --e_layers 4 \\\n  --d_model 512 \\\n  --d_ff 1024 \\\n  --batch_size 32 \\\n  --learning_rate 0.0005 \\\n  --lradj type1 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last"
+        }
+    ]
+}

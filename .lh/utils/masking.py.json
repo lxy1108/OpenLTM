@@ -1,0 +1,70 @@
+{
+    "sourceFile": "utils/masking.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 13,
+            "patches": [
+                {
+                    "date": 1730804535318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730805052244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n class TimerMultivariateCrossMask():\n     def __init__(self, B, n_vars, n_tokens, device=\"cpu\"):\n         mask_shape = [B, 1, n_tokens, n_tokens]\n         with torch.no_grad():\n-            self._mask1 = torch.ones((n_vars, n_vars), dtype=torch.bool).to(device)\n+            self._mask1 = torch.eye(n_vars, dtype=torch.bool).to(device)\n             self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n             self._mask = torch.kron(self._mask1, self._mask2)\n     @property\n     def mask(self):\n"
+                },
+                {
+                    "date": 1731679541168,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,12 +10,12 @@\n     def mask(self):\n         return self._mask\n \n class TimerMultivariateMask():\n-    def __init__(self, B, n_vars, n_tokens, device=\"cpu\"):\n+    def __init__(self, B, n_vars, n_tokens, mask=None, device=\"cpu\"):\n         mask_shape = [B, 1, n_tokens, n_tokens]\n         with torch.no_grad():\n-            self._mask1 = torch.ones((n_vars, n_vars), dtype=torch.bool).to(device)\n+            self._mask1 = torch.ones((B, n_vars, n_vars), dtype=torch.bool).to(device)\n             self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n             self._mask = torch.kron(self._mask1, self._mask2)\n     @property\n     def mask(self):\n@@ -24,9 +24,9 @@\n class TimerMultivariateCrossMask():\n     def __init__(self, B, n_vars, n_tokens, device=\"cpu\"):\n         mask_shape = [B, 1, n_tokens, n_tokens]\n         with torch.no_grad():\n-            self._mask1 = torch.eye(n_vars, dtype=torch.bool).to(device)\n+            self._mask1 = ~torch.eye(n_vars, dtype=torch.bool).to(device)\n             self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n             self._mask = torch.kron(self._mask1, self._mask2)\n     @property\n     def mask(self):\n"
+                },
+                {
+                    "date": 1731679641786,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,10 @@\n     def __init__(self, B, n_vars, n_tokens, mask=None, device=\"cpu\"):\n         mask_shape = [B, 1, n_tokens, n_tokens]\n         with torch.no_grad():\n             self._mask1 = torch.ones((B, n_vars, n_vars), dtype=torch.bool).to(device)\n+            for i in range(B):\n+                self._mask1[i,mask[i]:] = False\n             self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n             self._mask = torch.kron(self._mask1, self._mask2)\n     @property\n     def mask(self):\n"
+                },
+                {
+                    "date": 1731679657087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,10 @@\n         mask_shape = [B, 1, n_tokens, n_tokens]\n         with torch.no_grad():\n             self._mask1 = torch.ones((B, n_vars, n_vars), dtype=torch.bool).to(device)\n             for i in range(B):\n-                self._mask1[i,mask[i]:] = False\n+                self._mask1[i,mask[i]:,:] = False\n+                self._mask1[i,:,mask[i]:] = False\n             self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n             self._mask = torch.kron(self._mask1, self._mask2)\n     @property\n     def mask(self):\n"
+                },
+                {
+                    "date": 1731679687422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,11 +14,12 @@\n     def __init__(self, B, n_vars, n_tokens, mask=None, device=\"cpu\"):\n         mask_shape = [B, 1, n_tokens, n_tokens]\n         with torch.no_grad():\n             self._mask1 = torch.ones((B, n_vars, n_vars), dtype=torch.bool).to(device)\n-            for i in range(B):\n-                self._mask1[i,mask[i]:,:] = False\n-                self._mask1[i,:,mask[i]:] = False\n+            if mask is not None:\n+                for i in range(B):\n+                    self._mask1[i,mask[i]:,:] = False\n+                    self._mask1[i,:,mask[i]:] = False\n             self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n             self._mask = torch.kron(self._mask1, self._mask2)\n     @property\n     def mask(self):\n"
+                },
+                {
+                    "date": 1731732027049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,17 +11,18 @@\n         return self._mask\n \n class TimerMultivariateMask():\n     def __init__(self, B, n_vars, n_tokens, mask=None, device=\"cpu\"):\n-        mask_shape = [B, 1, n_tokens, n_tokens]\n+        mask_shape = [B, n_tokens, n_tokens]\n         with torch.no_grad():\n             self._mask1 = torch.ones((B, n_vars, n_vars), dtype=torch.bool).to(device)\n             if mask is not None:\n                 for i in range(B):\n                     self._mask1[i,mask[i]:,:] = False\n                     self._mask1[i,:,mask[i]:] = False\n             self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n-            self._mask = torch.kron(self._mask1, self._mask2)\n+            # self._mask = torch.kron(self._mask1, self._mask2)\n+            self._mask = torch.einsum(\"zui,zvj->zuvij\", self._mask1, self._mask2)\n     @property\n     def mask(self):\n         return self._mask\n     \n"
+                },
+                {
+                    "date": 1731732035720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n                     self._mask1[i,mask[i]:,:] = False\n                     self._mask1[i,:,mask[i]:] = False\n             self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n             # self._mask = torch.kron(self._mask1, self._mask2)\n-            self._mask = torch.einsum(\"zui,zvj->zuvij\", self._mask1, self._mask2)\n+            self._mask = torch.einsum(\"zui,zvj->zuvij\", self._mask1, self._mask2).unsqueeze(1)\n     @property\n     def mask(self):\n         return self._mask\n     \n"
+                },
+                {
+                    "date": 1731732525305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n                     self._mask1[i,mask[i]:,:] = False\n                     self._mask1[i,:,mask[i]:] = False\n             self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n             # self._mask = torch.kron(self._mask1, self._mask2)\n-            self._mask = torch.einsum(\"zui,zvj->zuvij\", self._mask1, self._mask2).unsqueeze(1)\n+            self._mask = torch.einsum(\"zui,zvj->zuvij\", self._mask1, self._mask2).reshape(B,n_vars*n_tokens,n_vars*n_tokens).unsqueeze(1)\n     @property\n     def mask(self):\n         return self._mask\n     \n"
+                },
+                {
+                    "date": 1733060773234,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n class TriangularCausalMask():\n     def __init__(self, B, L, device=\"cpu\"):\n         mask_shape = [B, 1, L, L]\n         with torch.no_grad():\n-            self._mask = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n+            self._mask = torch.tril(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n \n     @property\n     def mask(self):\n         return self._mask\n"
+                },
+                {
+                    "date": 1733060783645,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n class TriangularCausalMask():\n     def __init__(self, B, L, device=\"cpu\"):\n         mask_shape = [B, 1, L, L]\n         with torch.no_grad():\n-            self._mask = torch.tril(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n+            self._mask = torch.tril(torch.ones(mask_shape, dtype=torch.bool), diagonal=0).to(device)\n \n     @property\n     def mask(self):\n         return self._mask\n"
+                },
+                {
+                    "date": 1733060825133,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             if mask is not None:\n                 for i in range(B):\n                     self._mask1[i,mask[i]:,:] = False\n                     self._mask1[i,:,mask[i]:] = False\n-            self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n+            self._mask2 = torch.tril(torch.ones(mask_shape, dtype=torch.bool), diagonal=0).to(device)\n             # self._mask = torch.kron(self._mask1, self._mask2)\n             self._mask = torch.einsum(\"zui,zvj->zuvij\", self._mask1, self._mask2).reshape(B,n_vars*n_tokens,n_vars*n_tokens).unsqueeze(1)\n     @property\n     def mask(self):\n"
+                },
+                {
+                    "date": 1733061171470,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             if mask is not None:\n                 for i in range(B):\n                     self._mask1[i,mask[i]:,:] = False\n                     self._mask1[i,:,mask[i]:] = False\n-            self._mask2 = torch.tril(torch.ones(mask_shape, dtype=torch.bool), diagonal=0).to(device)\n+            self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n             # self._mask = torch.kron(self._mask1, self._mask2)\n             self._mask = torch.einsum(\"zui,zvj->zuvij\", self._mask1, self._mask2).reshape(B,n_vars*n_tokens,n_vars*n_tokens).unsqueeze(1)\n     @property\n     def mask(self):\n"
+                },
+                {
+                    "date": 1733061178404,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n class TriangularCausalMask():\n     def __init__(self, B, L, device=\"cpu\"):\n         mask_shape = [B, 1, L, L]\n         with torch.no_grad():\n-            self._mask = torch.tril(torch.ones(mask_shape, dtype=torch.bool), diagonal=0).to(device)\n+            self._mask = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n \n     @property\n     def mask(self):\n         return self._mask\n"
+                }
+            ],
+            "date": 1730804535318,
+            "name": "Commit-0",
+            "content": "import torch\n\nclass TriangularCausalMask():\n    def __init__(self, B, L, device=\"cpu\"):\n        mask_shape = [B, 1, L, L]\n        with torch.no_grad():\n            self._mask = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n\n    @property\n    def mask(self):\n        return self._mask\n\nclass TimerMultivariateMask():\n    def __init__(self, B, n_vars, n_tokens, device=\"cpu\"):\n        mask_shape = [B, 1, n_tokens, n_tokens]\n        with torch.no_grad():\n            self._mask1 = torch.ones((n_vars, n_vars), dtype=torch.bool).to(device)\n            self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n            self._mask = torch.kron(self._mask1, self._mask2)\n    @property\n    def mask(self):\n        return self._mask\n    \nclass TimerMultivariateCrossMask():\n    def __init__(self, B, n_vars, n_tokens, device=\"cpu\"):\n        mask_shape = [B, 1, n_tokens, n_tokens]\n        with torch.no_grad():\n            self._mask1 = torch.ones((n_vars, n_vars), dtype=torch.bool).to(device)\n            self._mask2 = torch.triu(torch.ones(mask_shape, dtype=torch.bool), diagonal=1).to(device)\n            self._mask = torch.kron(self._mask1, self._mask2)\n    @property\n    def mask(self):\n        return self._mask\n\nclass TimerCovariateMask():\n    def __init__(self, B, n_vars, n_tokens, device=\"cpu\"):\n        mask_shape = [B, 1, n_tokens, n_tokens]\n        with torch.no_grad():\n            self._mask1 = torch.eye(n_vars, dtype=torch.bool).to(device)\n            self._mask2 = torch.tril(torch.ones(mask_shape, dtype=torch.bool)).to(device)\n            self._mask = ~torch.kron(self._mask1, self._mask2)\n            self._mask[:, :, -n_tokens:, :-n_tokens] = False\n            \n    @property\n    def mask(self):\n        return self._mask"
+        }
+    ]
+}

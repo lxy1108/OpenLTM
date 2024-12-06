@@ -1,0 +1,42 @@
+{
+    "sourceFile": "scripts/adaptation/full_shot/timer_weather.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1730727983400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1730727990625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,12 @@\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n   --task_name forecast \\\n-  --is_training 0 \\\n+  --is_training 1 \\\n   --root_path ../../TS-Library/dataset/weather/ \\\n   --data_path weather.csv \\\n-  --model_id WTH_1 \\\n+  --model_id WTH_finetune \\\n   --model $model_name \\\n   --data MultivariateDatasetBenchmark  \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n"
+                },
+                {
+                    "date": 1730728004472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,11 @@\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n   --test_pred_len $test_pred_len \\\n-  --e_layers 4 \\\n-  --d_model 512 \\\n-  --d_ff 1024 \\\n+  --e_layers 8 \\\n+  --d_model 1024 \\\n+  --d_ff 2048 \\\n   --batch_size 32 \\\n   --learning_rate 0.0005 \\\n   --lradj type1 \\\n   --train_epochs 10 \\\n"
+                },
+                {
+                    "date": 1730728016346,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,10 +20,10 @@\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 32 \\\n-  --learning_rate 0.0005 \\\n-  --lradj type1 \\\n+  --learning_rate 5e-5 \\\n+  --lradj type4 \\\n   --train_epochs 10 \\\n   --patience 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1730728035244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len $test_pred_len \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 16 \\\n   --learning_rate 5e-5 \\\n   --lradj type4 \\\n   --train_epochs 10 \\\n   --patience 10 \\\n"
+                },
+                {
+                    "date": 1730728063789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len $token_len \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len $test_pred_len \\\n+  --test_pred_len 96 \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 16 \\\n"
+                },
+                {
+                    "date": 1730728091286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,5 +28,7 @@\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n-  --valid_last \\\n\\ No newline at end of file\n+  --valid_last \\\n+  --adaptation \\\n+  --pretrain_model_path ../../Large-Time-Series-Model/checkpoints/Timer_forecast_1.0.ckpt\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1730727983400,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=0\nmodel_name=timer\ntoken_num=7\ntoken_len=96\nseq_len=$((token_num * token_len))\n\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 0 \\\n  --root_path ../../TS-Library/dataset/weather/ \\\n  --data_path weather.csv \\\n  --model_id WTH_1 \\\n  --model $model_name \\\n  --data MultivariateDatasetBenchmark  \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len $test_pred_len \\\n  --e_layers 4 \\\n  --d_model 512 \\\n  --d_ff 1024 \\\n  --batch_size 32 \\\n  --learning_rate 0.0005 \\\n  --lradj type1 \\\n  --train_epochs 10 \\\n  --patience 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last \\"
+        }
+    ]
+}

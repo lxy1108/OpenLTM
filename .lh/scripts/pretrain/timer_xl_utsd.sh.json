@@ -1,0 +1,58 @@
+{
+    "sourceFile": "scripts/pretrain/timer_xl_utsd.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 10,
+            "patches": [
+                {
+                    "date": 1731675755020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1731675770885,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,11 +12,11 @@\n   --model $model_name \\\n   --data Utsd_Npy \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n-  --output_token_len $token_len \\\n+  --output_token_len 720 \\\n   --test_seq_len $seq_len \\\n-  --test_pred_len 96 \\\n+  --test_pred_len 720 \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n   --batch_size 16384 \\\n"
+                },
+                {
+                    "date": 1731680761302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   --is_training 1 \\\n   --root_path ./dataset/UTSD-full-npy \\\n   --model_id utsd \\\n   --model $model_name \\\n-  --data Utsd_Npy \\\n+  --data Utsd \\\n   --seq_len $seq_len \\\n   --input_token_len $token_len \\\n   --output_token_len 720 \\\n   --test_seq_len $seq_len \\\n"
+                },
+                {
+                    "date": 1731680779841,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7\n+export CUDA_VISIBLE_DEVICES=0,1,2,3\n model_name=timer_xl\n token_num=30\n token_len=96\n seq_len=$((token_num * token_len))\n@@ -18,14 +18,14 @@\n   --test_pred_len 720 \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 16384 \\\n+  --batch_size 4 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n   --tmax 10 \\\n   --use_norm \\\n   --valid_last \\\n   --dp \\\n\\ No newline at end of file\n-  --devices 0,1,2,3,4,5,6,7\n+  --devices 0,1,2,3\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1731680787709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n-model_name=timer_xl\n-token_num=30\n+model_name=timer\n+token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n \n python -u run.py \\\n"
+                },
+                {
+                    "date": 1731681050367,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n export CUDA_VISIBLE_DEVICES=0,1,2,3\n+export HF_ENDPOINT=https://hf-mirror.com\n model_name=timer\n token_num=7\n token_len=96\n seq_len=$((token_num * token_len))\n"
+                },
+                {
+                    "date": 1731730492232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 720 \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 4 \\\n+  --batch_size 32 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731730505540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 720 \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 32 \\\n+  --batch_size 64 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731732786274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 720 \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 64 \\\n+  --batch_size 512 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731751072185,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 720 \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 512 \\\n+  --batch_size 65536 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                },
+                {
+                    "date": 1731751473351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   --test_pred_len 720 \\\n   --e_layers 8 \\\n   --d_model 1024 \\\n   --d_ff 2048 \\\n-  --batch_size 65536 \\\n+  --batch_size 16384 \\\n   --learning_rate 0.00005 \\\n   --train_epochs 10 \\\n   --gpu 0 \\\n   --cosine \\\n"
+                }
+            ],
+            "date": 1731675755020,
+            "name": "Commit-0",
+            "content": "export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7\nmodel_name=timer_xl\ntoken_num=30\ntoken_len=96\nseq_len=$((token_num * token_len))\n\npython -u run.py \\\n  --task_name forecast \\\n  --is_training 1 \\\n  --root_path ./dataset/UTSD-full-npy \\\n  --model_id utsd \\\n  --model $model_name \\\n  --data Utsd_Npy \\\n  --seq_len $seq_len \\\n  --input_token_len $token_len \\\n  --output_token_len $token_len \\\n  --test_seq_len $seq_len \\\n  --test_pred_len 96 \\\n  --e_layers 8 \\\n  --d_model 1024 \\\n  --d_ff 2048 \\\n  --batch_size 16384 \\\n  --learning_rate 0.00005 \\\n  --train_epochs 10 \\\n  --gpu 0 \\\n  --cosine \\\n  --tmax 10 \\\n  --use_norm \\\n  --valid_last \\\n  --dp \\\n  --devices 0,1,2,3,4,5,6,7"
+        }
+    ]
+}
